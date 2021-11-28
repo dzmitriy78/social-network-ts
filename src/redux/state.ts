@@ -7,6 +7,7 @@ export type DialogsDataType = {
     name: string
     avatar: any
 }
+
 export type PostDataType = {
     id: number
     message: string
@@ -55,6 +56,7 @@ let store: GlobalStoreType = {
             ],
             newPostText: "",
         },
+
         messagePage: {
             dialogsData: [
                 {id: 1, name: "Dim", avatar: "https://klike.net/uploads/posts/2019-03/1551511801_1.jpg"},
