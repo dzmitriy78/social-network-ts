@@ -3,7 +3,7 @@ export type MessageDataType = {
     message: string
 }
 export type DialogsDataType = {
-    id: number
+    id: string
     name: string
     avatar: any
 }
