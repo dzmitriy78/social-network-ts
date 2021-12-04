@@ -33,7 +33,9 @@ export const MyPosts  = (props:MyPostsType) => {
     let onPostChange = () => {
 
         let text = newPostElement.current?.value;
-        props.dispatch(updatePostActionCreator(text));
+        if (text) {
+            props.dispatch(updatePostActionCreator(text));
+        }
     }
 
     return (

@@ -49,6 +49,7 @@ export function Dialogs(props: DialogsType) {
     let onDialogChange = () => {
 
         let dialogText = newDialogsElement.current?.value;
+        if (dialogText)
         props.dispatch(onDialogChangeActionCreator(dialogText));
     }
 

@@ -42,9 +42,9 @@ const addDialog = "ADD-DIALOG";
 const updateNewDialogText = "UPDATE-NEW-DIALOG-TEXT";
 
 export const addPostActionCreator = () => ({type: addPost});
-export const updatePostActionCreator = (text: string | undefined) => ({type: updateNewPostText, newText: text})
+export const updatePostActionCreator = (text: string) => ({type: updateNewPostText, newText: text})
 export const addDialogActionCreator = () => ({type: addDialog});
-export const onDialogChangeActionCreator = (dialogText: string | undefined) => ({type: updateNewDialogText, newDialText: dialogText});
+export const onDialogChangeActionCreator = (dialogText: string) => ({type: updateNewDialogText, newDialText: dialogText});
 
 let store: GlobalStoreType = {
     _state: {
