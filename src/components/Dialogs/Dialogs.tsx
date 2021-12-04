@@ -9,8 +9,6 @@ import {
     onDialogChangeActionCreator
 } from "../../redux/state";
 
-type newDialogsElement = string | null
-
 export type DialogsType = {
     messagePage: MessagePageType
     dispatch: any
@@ -20,7 +18,7 @@ const Dialog = (props: DialogsDataType) => {
     let path = "/dialogs/" + props.id;
     return (
         <div className={classes.dialog}>
-            <img src={props.avatar}/>i
+            <img src={props.avatar} alt={""}/>
             <NavLink className={(DialogsData) => DialogsData.isActive ? classes.active : ""}
                      to={path}>{props.name}</NavLink>
         </div>
@@ -50,8 +48,7 @@ export function Dialogs(props: DialogsType) {
 
     let onDialogChange = () => {
 
-        // @ts-ignore
-        let dialogText = newDialogsElement.current.value;
+        let dialogText = newDialogsElement.current?.value;
         props.dispatch(onDialogChangeActionCreator(dialogText));
     }
 

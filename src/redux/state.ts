@@ -3,9 +3,9 @@ export type MessageDataType = {
     message: string
 }
 export type DialogsDataType = {
-    id: string
+    id: number
     name: string
-    avatar: any
+    avatar: string
 }
 
 export type PostDataType = {
@@ -42,9 +42,9 @@ const addDialog = "ADD-DIALOG";
 const updateNewDialogText = "UPDATE-NEW-DIALOG-TEXT";
 
 export const addPostActionCreator = () => ({type: addPost});
-export const updatePostActionCreator = (text: string) => ({type: updateNewPostText, newText: text})
+export const updatePostActionCreator = (text: string | undefined) => ({type: updateNewPostText, newText: text})
 export const addDialogActionCreator = () => ({type: addDialog});
-export const onDialogChangeActionCreator = (dialogText: string) => ({type: updateNewDialogText, newDialText: dialogText});
+export const onDialogChangeActionCreator = (dialogText: string | undefined) => ({type: updateNewDialogText, newDialText: dialogText});
 
 let store: GlobalStoreType = {
     _state: {
@@ -82,12 +82,12 @@ let store: GlobalStoreType = {
     getState() {
         return this._state;
     },
-    subscriber(observer: any) {
+    subscriber(observer: ()=>void) {
         this._callSubscriber = observer;
     },
-    dispatch(action: any) {
+    dispatch(action: { type: string; newText: string; newDialText: string }) {
         if (action.type === "ADD-POST") {
-            let newPost = {
+            let newPost: PostDataType = {
                 id: 7,
                 message: this._state.profilePage.newPostText,
                 likeCount: 0
