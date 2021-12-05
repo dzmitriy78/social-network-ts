@@ -3,20 +3,10 @@ import classes from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {addPostActionCreator, PostDataType, updatePostActionCreator} from "../../../redux/state";
 
-
-type PostElementType = {
-    postData: Array<PostDataType>
-    Post: PostType
-    id: number
-}
-type PostType = Array<PostDataType>
 type MyPostsType = {
     postData: Array<PostDataType>
-    postElement?: PostElementType
-    dispatch: any
-    Post?: PostType
-    newPostText?: string
-    newPostElement?: React.RefObject<HTMLTextAreaElement>;
+    dispatch: (action: { type: string })=>void
+    newPostText: string
 }
 
 export const MyPosts  = (props:MyPostsType) => {

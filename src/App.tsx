@@ -8,13 +8,12 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {MessagePageType, Root_StateType} from "./redux/state";
+import {Root_StateType} from "./redux/state";
 
 type AppPropsType = {
 
     state: Root_StateType
-    dispatch: any
-    messagePage?: MessagePageType
+    dispatch: (action: { type: string; newText: string; newDialText: string })=>void
 }
 const App = (props:AppPropsType) => {
     return (

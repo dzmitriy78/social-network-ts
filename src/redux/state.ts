@@ -30,10 +30,10 @@ export type Root_StateType = {
 }
 export type GlobalStoreType = {
     _state: Root_StateType
-    _callSubscriber: any
-    getState: any
-    subscriber:any
-    dispatch: any
+    _callSubscriber: (callback: Root_StateType) => void
+    getState: () => Root_StateType
+    subscriber: (callback: (state: Root_StateType) => void) => void
+    dispatch: (action: { type: string; newText: string; newDialText: string })=>void
 }
 
 const addPost = "ADD-POST";
@@ -44,7 +44,10 @@ const updateNewDialogText = "UPDATE-NEW-DIALOG-TEXT";
 export const addPostActionCreator = () => ({type: addPost});
 export const updatePostActionCreator = (text: string) => ({type: updateNewPostText, newText: text})
 export const addDialogActionCreator = () => ({type: addDialog});
-export const onDialogChangeActionCreator = (dialogText: string) => ({type: updateNewDialogText, newDialText: dialogText});
+export const onDialogChangeActionCreator = (dialogText: string) => ({
+    type: updateNewDialogText,
+    newDialText: dialogText
+});
 
 let store: GlobalStoreType = {
     _state: {
@@ -61,10 +64,18 @@ let store: GlobalStoreType = {
             dialogsData: [
                 {id: 1, name: "Dim", avatar: "https://klike.net/uploads/posts/2019-03/1551511801_1.jpg"},
                 {id: 2, name: "Andrew", avatar: "https://cdn.freelance.ru/images/att/1324133_900_600.png"},
-                {id: 3, name: "John", avatar:"https://cs14.pikabu.ru/post_img/2021/05/08/12/1620504627134515650.jpg"},
-                {id: 4, name: "Silver", avatar: "https://cs14.pikabu.ru/post_img/2021/05/08/12/1620504650176973363.webp"},
+                {id: 3, name: "John", avatar: "https://cs14.pikabu.ru/post_img/2021/05/08/12/1620504627134515650.jpg"},
+                {
+                    id: 4,
+                    name: "Silver",
+                    avatar: "https://cs14.pikabu.ru/post_img/2021/05/08/12/1620504650176973363.webp"
+                },
                 {id: 5, name: "Pam", avatar: "https://cs13.pikabu.ru/post_img/2020/04/17/11/1587146536174888206.webp"},
-                {id: 6, name: "Gucci", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZXiLIwZ4MJ4wim5PJAEv-8pjZR6omqL6qFw&usqp=CAU"},
+                {
+                    id: 6,
+                    name: "Gucci",
+                    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZXiLIwZ4MJ4wim5PJAEv-8pjZR6omqL6qFw&usqp=CAU"
+                },
             ],
             messageData: [
                 {id: 1, message: "hi"},
@@ -78,14 +89,15 @@ let store: GlobalStoreType = {
         },
         sideBar: {}
     },
-    _callSubscriber() {},
+    _callSubscriber() {
+    },
     getState() {
         return this._state;
     },
-    subscriber(observer: ()=>void) {
+    subscriber(observer) {
         this._callSubscriber = observer;
     },
-    dispatch(action: { type: string; newText: string; newDialText: string }) {
+    dispatch(action) {
         if (action.type === "ADD-POST") {
             let newPost: PostDataType = {
                 id: 7,
