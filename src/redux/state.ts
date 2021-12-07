@@ -36,6 +36,10 @@ export type GlobalStoreType = {
     dispatch: (action: { type: string; newText: string; newDialText: string })=>void
 }
 
+export type ActionTypes = ReturnType<any>
+
+
+
 const addPost = "ADD-POST";
 const updateNewPostText = "UPDATE-NEW-POST-TEXT";
 const addDialog = "ADD-DIALOG";
