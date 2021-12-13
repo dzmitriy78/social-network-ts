@@ -1,3 +1,7 @@
+import profileReducer from "./profile-reducer";
+import messageReducer from "./message-reducer";
+import sidebarReducer from "./sidebar-reducer";
+
 export type MessageDataType = {
     id: number
     message: string
@@ -37,21 +41,6 @@ export type GlobalStoreType = {
 }
 
 export type ActionTypes = ReturnType<any>
-
-
-
-const addPost = "ADD-POST";
-const updateNewPostText = "UPDATE-NEW-POST-TEXT";
-const addDialog = "ADD-DIALOG";
-const updateNewDialogText = "UPDATE-NEW-DIALOG-TEXT";
-
-export const addPostActionCreator = () => ({type: addPost});
-export const updatePostActionCreator = (text: string) => ({type: updateNewPostText, newText: text})
-export const addDialogActionCreator = () => ({type: addDialog});
-export const onDialogChangeActionCreator = (dialogText: string) => ({
-    type: updateNewDialogText,
-    newDialText: dialogText
-});
 
 let store: GlobalStoreType = {
     _state: {
@@ -102,31 +91,11 @@ let store: GlobalStoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            let newPost: PostDataType = {
-                id: 7,
-                message: this._state.profilePage.newPostText,
-                likeCount: 0
-            }
-            this._state.profilePage.postData.push(newPost);
-            this._state.profilePage.newPostText = "";
-            this._callSubscriber(this._state);
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber(this._state);
-        } else if (action.type === "ADD-DIALOG") {
-            let newDialog = {
-                id: 10,
-                message: this._state.messagePage.newDialogText,
-            }
-            this._state.messagePage.messageData.push(newDialog);
-            this._state.messagePage.newDialogText = "";
-            this._callSubscriber(this._state);
-        } else if (action.type === "UPDATE-NEW-DIALOG-TEXT") {
-            this._state.messagePage.newDialogText = action.newDialText;
-            this._callSubscriber(this._state);
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        // @ts-ignore
+        this._state.messagePage = messageReducer(this._state.messagePage, action);
+        this._state.sideBar = sidebarReducer(this._state.sideBar);
+        this._callSubscriber(this._state);
     }
 }
-
 export default store;

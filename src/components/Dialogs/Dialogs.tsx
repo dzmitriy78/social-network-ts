@@ -2,12 +2,11 @@ import React from "react";
 import classes from "./Dialogs.module.css"
 import {NavLink} from "react-router-dom";
 import {
-    addDialogActionCreator,
     DialogsDataType,
     MessageDataType,
-    MessagePageType,
-    onDialogChangeActionCreator
+    MessagePageType
 } from "../../redux/state";
+import {addDialogActionCreator, onDialogChangeActionCreator} from "../../redux/message-reducer";
 
 export type DialogsType = {
     messagePage: MessagePageType
