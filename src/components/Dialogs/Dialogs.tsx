@@ -1,4 +1,4 @@
-import React, {createRef} from "react";
+import React from "react";
 import classes from "./Dialogs.module.css"
 import {NavLink} from "react-router-dom";
 import {
@@ -40,17 +40,15 @@ export function Dialogs(props: DialogsType) {
         .map(m => <Message id={m.id} message={m.message}/>);
 
 
-    let newDialogsElement: React.RefObject<HTMLTextAreaElement>;
-    newDialogsElement = createRef();
     let addDialog = () => {
         props.dispatch(addDialogActionCreator());
     }
 
-    let onDialogChange = () => {
+    let onDialogChange = (e: { target: { value: string; }; }) => {
 
-        let dialogText = newDialogsElement.current?.value;
+        let dialogText = e.target.value;
         if (dialogText)
-        props.dispatch(onDialogChangeActionCreator(dialogText));
+            props.dispatch(onDialogChangeActionCreator(dialogText));
     }
 
     return (
@@ -62,11 +60,11 @@ export function Dialogs(props: DialogsType) {
                 {messageElement}
 
                 <div>
-                    <textarea onChange={onDialogChange} ref={newDialogsElement}
+                    <textarea onChange={onDialogChange}
                               value={props.messagePage.newDialogText}/>
                 </div>
                 <div>
-                    <button onClick={addDialog}>Add post</button>
+                    <button disabled={props.messagePage.newDialogText === ""} onClick={addDialog}>Add post</button>
                 </div>
             </div>
         </div>
