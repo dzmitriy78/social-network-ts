@@ -5,7 +5,7 @@ export const addPost = "ADD-POST";
 export const addPostActionCreator = () => ({type: addPost});
 export const updatePostActionCreator = (text: string) => ({type: updateNewPostText, newText: text})
 
-const profileReducer = (state: { postData: any; newPostText: string; }, action: { type: string; newText: string; newDialText: string; }) => {
+const profileReducer = (state: { postData: PostDataType[]; newPostText: string; }, action: { type: string; newText: string; newDialText: string; }) => {
     switch (action.type) {
         case "ADD-POST":
             let newPost: PostDataType = {

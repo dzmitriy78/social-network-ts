@@ -91,6 +91,7 @@ let store: GlobalStoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
+        // @ts-ignore
         this._state.profilePage = profileReducer(this._state.profilePage, action);
         // @ts-ignore
         this._state.messagePage = messageReducer(this._state.messagePage, action);
