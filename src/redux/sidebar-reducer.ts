@@ -1,6 +1,8 @@
-import { SideBar } from "./state";
+import { SideBar } from "./store";
 
-const sidebarReducer = (state: SideBar)=>{
+let initialState = {}
+
+const sidebarReducer = (state: SideBar = initialState)=>{
 return state;
 }
 export default sidebarReducer;

@@ -1,12 +1,13 @@
 import React from 'react';
 import * as serviceWorker from './serviceWorker';
-import store, {Root_StateType} from "./redux/state";
+import {DialogsDataType, MessageDataType, PostDataType, Root_StateType, SideBar} from "./redux/store";
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
+import store from "./redux/redux-store";
 
-let rerenderTree = (state:Root_StateType) => {
+let rerenderTree = (state: any/*EmptyObject & { messagePage: { dialogsData?: DialogsDataType[]; newDialogText: string; messageData: MessageDataType[] }; sidebar: SideBar; profilePage: { postData: PostDataType[]; newPostText: string } }*/) => {
     ReactDOM.render(
         <BrowserRouter>
             <App state={state}
@@ -15,7 +16,10 @@ let rerenderTree = (state:Root_StateType) => {
 }
 
 rerenderTree(store.getState());
-store.subscriber(rerenderTree);
+store.subscribe(()=>{
+    let state = store.getState();
+    rerenderTree(state)
+});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

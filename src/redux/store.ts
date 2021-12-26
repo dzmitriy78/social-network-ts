@@ -1,3 +1,4 @@
+
 import profileReducer from "./profile-reducer";
 import messageReducer from "./message-reducer";
 import sidebarReducer from "./sidebar-reducer";
@@ -30,7 +31,7 @@ export type SideBar = {}
 export type Root_StateType = {
     profilePage: ProfilePageType
     messagePage: MessagePageType
-    sideBar: SideBar
+    sideBar?: SideBar
 }
 export type GlobalStoreType = {
     _state: Root_StateType

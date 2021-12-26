@@ -1,11 +1,20 @@
-import {PostDataType} from "./state";
+import {PostDataType} from "./store";
 
 export const updateNewPostText = "UPDATE-NEW-POST-TEXT";
 export const addPost = "ADD-POST";
 export const addPostActionCreator = () => ({type: addPost});
 export const updatePostActionCreator = (text: string) => ({type: updateNewPostText, newText: text})
 
-const profileReducer = (state: { postData: PostDataType[]; newPostText: string; }, action: { type: string; newText: string; newDialText: string; }) => {
+let initialState = {
+    postData: [
+        {id: 1, message: "Hi, how are you", likeCount: 15},
+        {id: 2, message: "It's my first post", likeCount: 25},
+        {id: 3, message: "Hi", likeCount: 1},
+    ],
+    newPostText: "",
+}
+
+const profileReducer = (state: { postData: PostDataType[]; newPostText: string; }= initialState, action: { type: string; newText: string; newDialText: string; }) => {
     switch (action.type) {
         case "ADD-POST":
             let newPost: PostDataType = {
@@ -15,13 +24,12 @@ const profileReducer = (state: { postData: PostDataType[]; newPostText: string; 
             }
             state.postData.push(newPost);
             state.newPostText = "";
-            break;
+            return state;
         case "UPDATE-NEW-POST-TEXT":
             state.newPostText = action.newText;
-            break;
+            return state;
         default:
             return state;
     }
-    return state;
 }
 export default profileReducer;

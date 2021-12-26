@@ -5,7 +5,7 @@ import {
     DialogsDataType,
     MessageDataType,
     MessagePageType
-} from "../../redux/state";
+} from "../../redux/store";
 import {addDialogActionCreator, onDialogChangeActionCreator} from "../../redux/message-reducer";
 
 export type DialogsType = {
