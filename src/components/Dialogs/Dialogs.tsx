@@ -5,8 +5,8 @@ import {DialogsDataType, MessageDataType, MessagePageType} from "../../redux/sto
 
 export type DialogsType = {
     messagePage: MessagePageType
-    addDialogActionCreator(): void;
-    onDialogChangeActionCreator(dialogText: string): void;
+    addDialog(): void;
+    onDialogChange(dialogText: string): void;
 }
 
 const Dialog = (props: DialogsDataType) => {
@@ -38,14 +38,14 @@ export function Dialogs(props: DialogsType) {
 
 
     let addDialog = () => {
-        props.addDialogActionCreator();
+        props.addDialog();
     }
 
     let onDialogChange = (e: { target: { value: string; }; }) => {
 
         let dialogText = e.target.value;
         if (dialogText)
-            props.onDialogChangeActionCreator(dialogText);
+            props.onDialogChange(dialogText);
     }
 
     return (
