@@ -1,16 +1,13 @@
 import React from "react";
 import classes from "./Dialogs.module.css"
 import {NavLink} from "react-router-dom";
-import {
-    DialogsDataType,
-    MessageDataType,
-    MessagePageType
-} from "../../redux/store";
-import {addDialogActionCreator, onDialogChangeActionCreator} from "../../redux/message-reducer";
+import {DialogsDataType, MessageDataType, MessagePageType} from "../../redux/store";
 
 export type DialogsType = {
     messagePage: MessagePageType
-    dispatch: any
+    newDialogText: string
+    addDialogActionCreator(): void;
+    onDialogChangeActionCreator(dialogText: string): void;
 }
 
 const Dialog = (props: DialogsDataType) => {
@@ -40,14 +37,14 @@ export function Dialogs(props: DialogsType) {
 
 
     let addDialog = () => {
-        props.dispatch(addDialogActionCreator());
+        props.addDialogActionCreator();
     }
 
     let onDialogChange = (e: { target: { value: string; }; }) => {
 
         let dialogText = e.target.value;
         if (dialogText)
-            props.dispatch(onDialogChangeActionCreator(dialogText));
+            props.onDialogChangeActionCreator(dialogText);
     }
 
     return (

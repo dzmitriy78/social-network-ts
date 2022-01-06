@@ -1,6 +1,5 @@
 import React from 'react';
 import * as serviceWorker from './serviceWorker';
-import {DialogsDataType, MessageDataType, PostDataType, Root_StateType, SideBar} from "./redux/store";
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -10,13 +9,12 @@ import store from "./redux/redux-store";
 let rerenderTree = (state: any/*EmptyObject & { messagePage: { dialogsData?: DialogsDataType[]; newDialogText: string; messageData: MessageDataType[] }; sidebar: SideBar; profilePage: { postData: PostDataType[]; newPostText: string } }*/) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App state={state}
-                 dispatch={store.dispatch.bind(store)}/>
+            <App store ={store}/>
         </BrowserRouter>, document.getElementById('root'));
 }
 
 rerenderTree(store.getState());
-store.subscribe(()=>{
+store.subscribe(() => {
     let state = store.getState();
     rerenderTree(state)
 });

@@ -2,29 +2,30 @@ import React from "react";
 import classes from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {PostDataType} from "../../../redux/store";
-import {addPostActionCreator, updatePostActionCreator} from "../../../redux/profile-reducer";
 
 type MyPostsType = {
     postData: Array<PostDataType>
     dispatch: (action: { type: string }) => void
     newPostText: string
+    updatePostActionCreator: any
+    addPost: any
 }
 
-export const MyPosts = (props: MyPostsType) => {
+export const MyPosts = (props: any) => {
 
     let postElement = props.postData
-        .map(p => <Post id={p.id} message={p.message} likes={p.likeCount}/>)
+        .map((p: { id: number; message: string; likeCount: number; }) => <Post id={p.id} message={p.message} likes={p.likeCount}/>)
 
 
-    let addPost = () => {
-        props.dispatch(addPostActionCreator());
+    let onAddPost = () => {
+        props.addPost();
     }
 
     let onPostChange = (e: { target: { value: string; }; }) => {
 
         let text = e.target.value;
         if (text) {
-            props.dispatch(updatePostActionCreator(text));
+            props.updatePostActionCreator(text);
         }
     }
 
@@ -36,7 +37,7 @@ export const MyPosts = (props: MyPostsType) => {
                     <textarea onChange={onPostChange} value={props.newPostText}/>
                 </div>
                 <div>
-                    <button disabled={props.newPostText === ""} onClick={addPost}>Add post</button>
+                    <button disabled={props.newPostText === ""} onClick={onAddPost}>Add post</button>
                 </div>
                 <div className={classes.posts}>
                     {postElement}
