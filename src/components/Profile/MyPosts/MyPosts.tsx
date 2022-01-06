@@ -5,13 +5,12 @@ import {PostDataType} from "../../../redux/store";
 
 type MyPostsType = {
     postData: Array<PostDataType>
-    dispatch: (action: { type: string }) => void
     newPostText: string
-    updatePostActionCreator: any
-    addPost: any
+    updatePostActionCreator(text: string): void
+    addPost(): void
 }
 
-export const MyPosts = (props: any) => {
+export const MyPosts = (props: MyPostsType) => {
 
     let postElement = props.postData
         .map((p: { id: number; message: string; likeCount: number; }) => <Post id={p.id} message={p.message} likes={p.likeCount}/>)

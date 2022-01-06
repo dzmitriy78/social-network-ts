@@ -3,7 +3,7 @@ import {addDialogActionCreator, onDialogChangeActionCreator} from "../../redux/m
 import {Dialogs} from "./Dialogs";
 
 export function DialogsContainer(props: any) {
-    let state = props.store.getState()
+    let state = props.store.getState().messagePage;
     let addDialog = () => {
         props.store.dispatch(addDialogActionCreator());
     }
@@ -15,7 +15,6 @@ export function DialogsContainer(props: any) {
     return (
         <Dialogs addDialogActionCreator={addDialog}
                  onDialogChangeActionCreator={onDialogChange}
-                 newDialogText={state.messagePage.newDialogText}
-                 messagePage={state.messagePage}/>
+                 messagePage={state}/>
     )
 }

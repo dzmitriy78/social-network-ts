@@ -6,7 +6,7 @@ import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import store from "./redux/redux-store";
 
-let rerenderTree = (state: any/*EmptyObject & { messagePage: { dialogsData?: DialogsDataType[]; newDialogText: string; messageData: MessageDataType[] }; sidebar: SideBar; profilePage: { postData: PostDataType[]; newPostText: string } }*/) => {
+let rerenderTree = (props:any) => {
     ReactDOM.render(
         <BrowserRouter>
             <App store ={store}/>

@@ -5,7 +5,6 @@ import {DialogsDataType, MessageDataType, MessagePageType} from "../../redux/sto
 
 export type DialogsType = {
     messagePage: MessagePageType
-    newDialogText: string
     addDialogActionCreator(): void;
     onDialogChangeActionCreator(dialogText: string): void;
 }
@@ -29,10 +28,12 @@ const Message = (props: MessageDataType) => {
 
 export function Dialogs(props: DialogsType) {
 
-    let dialogsElement = props.messagePage.dialogsData
+    let state = props.messagePage;
+
+    let dialogsElement = state.dialogsData
         .map(d => <Dialog avatar={d.avatar} name={d.name} id={d.id}/>);
 
-    let messageElement = props.messagePage.messageData
+    let messageElement = state.messageData
         .map(m => <Message id={m.id} message={m.message}/>);
 
 
@@ -57,10 +58,10 @@ export function Dialogs(props: DialogsType) {
 
                 <div>
                     <textarea onChange={onDialogChange}
-                              value={props.messagePage.newDialogText}/>
+                              value={state.newDialogText}/>
                 </div>
                 <div>
-                    <button disabled={props.messagePage.newDialogText === ""} onClick={addDialog}>Add post</button>
+                    <button disabled={state.newDialogText === ""} onClick={addDialog}>Add post</button>
                 </div>
             </div>
         </div>
