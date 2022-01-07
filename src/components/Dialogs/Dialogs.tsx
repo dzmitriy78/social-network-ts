@@ -31,10 +31,10 @@ export function Dialogs(props: DialogsType) {
     let state = props.messagePage;
 
     let dialogsElement = state.dialogsData
-        .map(d => <Dialog avatar={d.avatar} name={d.name} id={d.id}/>);
+        .map(d => <Dialog key = {d.id} avatar={d.avatar} name={d.name} id={d.id}/>);
 
     let messageElement = state.messageData
-        .map(m => <Message id={m.id} message={m.message}/>);
+        .map(m => <Message key = {m.id} id={m.id} message={m.message}/>);
 
 
     let addDialog = () => {

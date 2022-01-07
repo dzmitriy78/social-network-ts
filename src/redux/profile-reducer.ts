@@ -14,7 +14,7 @@ let initialState = {
     newPostText: "",
 }
 
-const profileReducer = (state: { postData: PostDataType[]; newPostText: string; }= initialState, action: { type: string; newText: string; newDialText: string; }) => {
+const profileReducer = (state: { postData: PostDataType[]; newPostText: string; } = initialState, action: { type: string; newText: string; newDialText: string; }) => {
     switch (action.type) {
         case "ADD-POST":
             let newPost: PostDataType = {
@@ -22,12 +22,16 @@ const profileReducer = (state: { postData: PostDataType[]; newPostText: string; 
                 message: state.newPostText,
                 likeCount: 0
             }
-            state.postData.push(newPost);
-            state.newPostText = "";
-            return state;
+            return {
+                ...state,
+                postData: [...state.postData, newPost],
+                newPostText: ""
+            }
         case "UPDATE-NEW-POST-TEXT":
-            state.newPostText = action.newText;
-            return state;
+            return {
+                ...state,
+                newPostText: action.newText
+            }
         default:
             return state;
     }

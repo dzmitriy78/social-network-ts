@@ -6,11 +6,11 @@ export const ProfileInfo = () => {
         <div className={classes.profileInfo}>
             <div>
                 <img
-                    src="https://cdn-prod.medicalnewstoday.com/content/images/articles/325/325466/man-walking-dog.jpg"/>
+                    src="https://p4.wallpaperbetter.com/wallpaper/198/347/760/astronaut-vortex-4k-8k-wallpaper-preview.jpg" alt={''}/>
             </div>
             <div className={classes.description}> ava + description
                 <img
-                    src={""}/>
+                    src="" alt={""}/>
             </div>
         </div>
     )

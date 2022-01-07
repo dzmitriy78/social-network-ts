@@ -36,20 +36,24 @@ let initialState = {
     newDialogText: "",
 }
 
-const messageReducer = (state: { dialogsData?: DialogsDataType[]; newDialogText: string; messageData: MessageDataType[]; } = initialState,
-                        action: { type: string; newText?: string; newDialText: string; }) => {
+const messageReducer = (state: { dialogsData: DialogsDataType[]; newDialogText: string; messageData: MessageDataType[]; } = initialState,
+                        action: { type: string; newText: string; newDialText: string; }) => {
     switch (action.type) {
         case "ADD-DIALOG":
             let newDialog = {
                 id: 10,
                 message: state.newDialogText,
             }
-            state.messageData.push(newDialog);
-            state.newDialogText = "";
-            return state;
+            return {
+                ...state,
+                messageData: [...state.messageData, newDialog],
+                newDialogText: ""
+            }
         case "UPDATE-NEW-DIALOG-TEXT":
-            state.newDialogText = action.newDialText;
-            return state;
+            return {
+                ...state,
+                newDialogText: action.newDialText
+            }
         default:
             return state;
     }
