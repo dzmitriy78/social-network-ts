@@ -1,7 +1,29 @@
 import React from "react";
 import styles from "./users.module.css"
 
-let Users = (props: any) => {
+type LocationType = {
+    city: string
+    country: string
+}
+export type UsersType = {
+    id: number
+    avatar: string
+    followed: boolean
+    fullName: string
+    status: string
+    location: LocationType
+}
+
+export type UsersPropsType = {
+    length?: number
+    users: Array<UsersType>
+    setUsers: (users: ({ fullName: string; location: { country: string; city: string }; id: number; avatar: string; followed: boolean; status: string })[]) => void
+    unFollow: (id: number) => void
+    follow: (id: number) => void
+    map?(element: (u: UsersType) => JSX.Element): UsersType
+}
+
+let Users = (props: UsersPropsType) => {
     if (props.users.length === 0) {
         props.setUsers([
             {
@@ -32,11 +54,11 @@ let Users = (props: any) => {
     return (
         <div>
             {
-                props.users.map((u: any) => {
-                    return <div key={u.id}>
+                props.users.map((u: UsersType) => {
+                        return <div key={u.id}>
                <span>
                    <div>
-                       <img src={u.avatar} className={styles.userAvatar} alt={""}/>
+                       <img src={u.avatar} className={styles.userAvatar} alt={"ava"}/>
                    </div>
                    <div>
                        {u.followed ? <button onClick={() => {
@@ -48,9 +70,13 @@ let Users = (props: any) => {
                    </div>
                </span>
                             <span>
-                            <div>{u.location.city}</div>
-                            <div>{u.location.country}</div>
-                    </span>
+                                <div>{u.fullName}</div>
+                                <div>{u.status}</div>
+                            </span>
+                            <span>
+                                <div>{u.location.city}</div>
+                                <div>{u.location.country}</div>
+                            </span>
                         </div>
                     }
                 )
