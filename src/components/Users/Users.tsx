@@ -1,23 +1,20 @@
 import React from "react";
 import styles from "./users.module.css"
+import axios from "axios";
+import userPhoto from "./../../assets/images/user.png"
 
-type LocationType = {
-    city: string
-    country: string
-}
 export type UsersType = {
     id: number
-    avatar: string
+    photos: { small: string; large: string }
     followed: boolean
-    fullName: string
+    name: string
     status: string
-    location: LocationType
 }
 
 export type UsersPropsType = {
     length?: number
     users: Array<UsersType>
-    setUsers: (users: ({ fullName: string; location: { country: string; city: string }; id: number; avatar: string; followed: boolean; status: string })[]) => void
+    setUsers: (users: UsersType[]) => void
     unFollow: (id: number) => void
     follow: (id: number) => void
     map?(element: (u: UsersType) => JSX.Element): UsersType
@@ -25,32 +22,36 @@ export type UsersPropsType = {
 
 let Users = (props: UsersPropsType) => {
     if (props.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                avatar: "https://author.today/content/2020/02/27/6b61e91ea7f64ddb975f57fa36a38814.jpg",
-                followed: true,
-                fullName: "Dzmitriy",
-                status: "Boss",
-                location: {city: "Baranovichi", country: "Belarus"}
-            },
-            {
-                id: 2,
-                avatar: "https://cspromogame.ru//storage/upload_images/avatars/1299.jpg",
-                followed: true,
-                fullName: "Yarik",
-                status: "Admin",
-                location: {city: "Baranovichi", country: "Belarus"}
-            },
-            {
-                id: 3,
-                avatar: "https://i.imgur.com/mDcyZHZ.png",
-                followed: false,
-                fullName: "Anyuta",
-                status: "User",
-                location: {city: "Minsk", country: "Belarus"},
-            }])
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+                props.setUsers(response.data.items)
+            }
+        )
     }
+    /* [
+     {
+         id: 1,
+         avatar: "https://author.today/content/2020/02/27/6b61e91ea7f64ddb975f57fa36a38814.jpg",
+         followed: true,
+         fullName: "Dzmitriy",
+         status: "Boss",
+         location: {city: "Baranovichi", country: "Belarus"}
+     },
+     {
+         id: 2,
+         avatar: "https://cspromogame.ru//storage/upload_images/avatars/1299.jpg",
+         followed: true,
+         fullName: "Yarik",
+         status: "Admin",
+         location: {city: "Baranovichi", country: "Belarus"}
+     },
+     {
+         id: 3,
+         avatar: "https://i.imgur.com/mDcyZHZ.png",
+         followed: false,
+         fullName: "Anyuta",
+         status: "User",
+         location: {city: "Minsk", country: "Belarus"},
+     }]*/
     return (
         <div>
             {
@@ -58,7 +59,8 @@ let Users = (props: UsersPropsType) => {
                         return <div key={u.id}>
                <span>
                    <div>
-                       <img src={u.avatar} className={styles.userAvatar} alt={"ava"}/>
+                       <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userAvatar}
+                            alt={"ava"}/>
                    </div>
                    <div>
                        {u.followed ? <button onClick={() => {
@@ -70,12 +72,12 @@ let Users = (props: UsersPropsType) => {
                    </div>
                </span>
                             <span>
-                                <div>{u.fullName}</div>
+                                <div>{u.name}</div>
                                 <div>{u.status}</div>
                             </span>
                             <span>
-                                <div>{u.location.city}</div>
-                                <div>{u.location.country}</div>
+                                <div>{"u.location.city"}</div>
+                                <div>{"u.location.country"}</div>
                             </span>
                         </div>
                     }
