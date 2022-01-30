@@ -11,11 +11,9 @@ export type UsersType = {
 }
 
 export type UsersPropsType = {
-    length?: number
     users: Array<UsersType>
     unFollow: (id: number) => void
     follow: (id: number) => void
-    map?(element: (u: UsersType) => JSX.Element): UsersType
     pageSize: number
     totalUsersCount: number
     currentPage: number
