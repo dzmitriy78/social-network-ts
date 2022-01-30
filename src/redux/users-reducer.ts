@@ -1,17 +1,11 @@
 import {UsersType} from "../components/Users/Users";
 
-const follow = "FOLLOW";
-const unFollow = "UNFOLLOW";
-const setUsers = "SET_USERS";
-const setCurrentPage = "SET_CURRENT_PAGE";
-const toggleFetching = "TOGGLE_IS_FETCHING";
-const setTotalUsersCount = "SET_TOTAL_USERS_COUNT";
-export const toggleFetchingAC = (isFetching: boolean) => ({type: toggleFetching, isFetching});
-export const followAC = (userId: number) => ({type: follow, userId});
-export const unFollowAC = (userId: number) => ({type: unFollow, userId});
-export const setUsersAC = (users: Array<UsersType>) => ({type: setUsers, users});
-export const setCurrentPageAC = (currentPage: number) => ({type: setCurrentPage, currentPage});
-export const setTotalUsersCountAC = (totalCount: number) => ({type: setTotalUsersCount, count: totalCount});
+export const toggleFetching = (isFetching: boolean) => ({type: "TOGGLE_IS_FETCHING", isFetching});
+export const follow = (userId: number) => ({type: "FOLLOW", userId});
+export const unFollow = (userId: number) => ({type: "UNFOLLOW", userId});
+export const setUsers = (users: Array<UsersType>) => ({type: "SET_USERS", users});
+export const setCurrentPage = (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage});
+export const setTotalUsersCount = (totalCount: number) => ({type: "SET_TOTAL_USERS_COUNT", count: totalCount});
 /*type AC = ReturnType<typeof followAC> | ReturnType<typeof unFollowAC> | ReturnType<typeof setUsersAC>*/
 
 let initialState = {
