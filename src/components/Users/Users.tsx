@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./users.module.css"
-import axios from "axios";
 import userPhoto from "./../../assets/images/user.png"
 
 export type UsersType = {
@@ -14,46 +13,34 @@ export type UsersType = {
 export type UsersPropsType = {
     length?: number
     users: Array<UsersType>
-    setUsers: (users: UsersType[]) => void
     unFollow: (id: number) => void
     follow: (id: number) => void
     map?(element: (u: UsersType) => JSX.Element): UsersType
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    onPageChanged: (pages: number) => void
+
 }
 
-let Users = (props: UsersPropsType) => {
-    if (props.users.length === 0) {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-                props.setUsers(response.data.items)
-            }
-        )
+export let Users = (props: UsersPropsType) => {
+
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
-    /* [
-     {
-         id: 1,
-         avatar: "https://author.today/content/2020/02/27/6b61e91ea7f64ddb975f57fa36a38814.jpg",
-         followed: true,
-         fullName: "Dzmitriy",
-         status: "Boss",
-         location: {city: "Baranovichi", country: "Belarus"}
-     },
-     {
-         id: 2,
-         avatar: "https://cspromogame.ru//storage/upload_images/avatars/1299.jpg",
-         followed: true,
-         fullName: "Yarik",
-         status: "Admin",
-         location: {city: "Baranovichi", country: "Belarus"}
-     },
-     {
-         id: 3,
-         avatar: "https://i.imgur.com/mDcyZHZ.png",
-         followed: false,
-         fullName: "Anyuta",
-         status: "User",
-         location: {city: "Minsk", country: "Belarus"},
-     }]*/
     return (
         <div>
+            <div>
+                {pages.map(p => {
+
+                    return (
+                        <span className={props.currentPage === p ? styles.selectedPages : ""}
+                              onClick={() => props.onPageChanged(p)}>{p}</span>
+                    )
+                })}
+            </div>
             {
                 props.users.map((u: UsersType) => {
                         return <div key={u.id}>
@@ -87,4 +74,3 @@ let Users = (props: UsersPropsType) => {
 
     )
 }
-export default Users;
