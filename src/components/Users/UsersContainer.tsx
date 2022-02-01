@@ -26,7 +26,7 @@ export type UsersContainerPropsType = {
     toggleFetching(isFetching: boolean): void
 }
 
-export class UsersContainerC extends React.Component<UsersContainerPropsType, UsersType> {
+ class UsersContainer extends React.Component<UsersContainerPropsType, UsersType> {
     componentDidMount() {
         this.props.toggleFetching(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
@@ -76,11 +76,11 @@ let mapStateToProps = (state: { usersPage: { users: UsersType[], pageSize: numbe
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
     follow,
     unFollow,
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
     toggleFetching
-})(UsersContainerC)
+})(UsersContainer)

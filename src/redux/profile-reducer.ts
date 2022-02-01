@@ -1,9 +1,11 @@
 import {PostDataType} from "./store";
+import {ProfileType} from "../components/Profile/ProfileContainer";
 
 export const updateNewPostText = "UPDATE-NEW-POST-TEXT";
 export const addPost = "ADD-POST";
 export const addPostActionCreator = () => ({type: addPost});
 export const updatePostActionCreator = (text: string) => ({type: updateNewPostText, newText: text})
+export const setUserProfile = (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile})
 
 let initialState = {
     postData: [
@@ -12,9 +14,10 @@ let initialState = {
         {id: 3, message: "Hi", likeCount: 1},
     ],
     newPostText: "",
+    profile: null
 }
 
-const profileReducer = (state: { postData: PostDataType[]; newPostText: string; } = initialState, action: { type: string; newText: string; newDialText: string; }) => {
+const profileReducer = (state: { postData: PostDataType[]; newPostText: string; } = initialState, action: { type: string; newText: string; newDialText: string; profile: ProfileType}) => {
     switch (action.type) {
         case "ADD-POST":
             let newPost: PostDataType = {
@@ -31,6 +34,11 @@ const profileReducer = (state: { postData: PostDataType[]; newPostText: string; 
             return {
                 ...state,
                 newPostText: action.newText
+            }
+        case "SET_USER_PROFILE":
+            return {
+                ...state,
+                profile: action.profile
             }
         default:
             return state;

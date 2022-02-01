@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./users.module.css"
 import userPhoto from "./../../assets/images/user.png"
+import {NavLink} from "react-router-dom";
 
 export type UsersType = {
     id: number
@@ -18,7 +19,6 @@ export type UsersPropsType = {
     totalUsersCount: number
     currentPage: number
     onPageChanged: (pages: number) => void
-
 }
 
 export let Users = (props: UsersPropsType) => {
@@ -44,8 +44,10 @@ export let Users = (props: UsersPropsType) => {
                         return <div key={u.id}>
                <span>
                    <div>
+                       <NavLink to={"/profile/" + u.id}>
                        <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userAvatar}
                             alt={"ava"}/>
+                       </NavLink>
                    </div>
                    <div>
                        {u.followed ? <button onClick={() => {
