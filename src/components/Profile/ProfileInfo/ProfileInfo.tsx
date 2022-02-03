@@ -6,7 +6,6 @@ import {ProfileType} from "../ProfileContainer";
 type ProfileInfoType = {
     profile: ProfileType
 }
-
 export const ProfileInfo = (props: ProfileInfoType) => {
     if (!props.profile) {
         return (
