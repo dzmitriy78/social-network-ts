@@ -26,7 +26,7 @@ export type UsersContainerPropsType = {
     toggleFetching(isFetching: boolean): void
 }
 
- class UsersContainer extends React.Component<UsersContainerPropsType, UsersType> {
+class UsersContainer extends React.Component<UsersContainerPropsType, UsersType> {
     componentDidMount() {
         this.props.toggleFetching(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
