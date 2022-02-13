@@ -1,9 +1,9 @@
 import React from "react";
 import {Profile} from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {setUserProfile} from "../../redux/profile-reducer";
 import {Params, PathMatch, useMatch} from "react-router-dom";
+import {myAPI} from "../../api/api";
 
 export type ProfileType = {
     aboutMe: string
@@ -28,18 +28,12 @@ const ProfileURLMatch = (props: ProfileContainerPropsType) => {
 }
 class ProfileContainer extends React.Component<ProfileContainerPropsType, ProfileType> {
     componentDidMount() {
-        let userId = this.props.match ? this.props.match.params.userId : 'My ID';
-        let BASE_URL  = "https://social-network.samuraijs.com/api/1.0";
-        axios.get(`${BASE_URL}/profile/${userId}`).then(({ data }) => {
+        let userId = this.props.match ? this.props.match.params.userId : /*'My ID'*/7384;
+        myAPI.getProfile(userId)
+            .then(({ data }) => {
             this.props.setUserProfile(data);
         });
     }
-/*        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/10`)
-            .then(response => {
-                this.props.setUserProfile(response.data)
-            })
-    }*/
-
     render() {
         return (
             <Profile {...this.props} profile={this.props.profile}/>
