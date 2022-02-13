@@ -17,10 +17,9 @@ export type ProfileType = {
 export type ProfileContainerPropsType = {
     setUserProfile(profile: ProfileType): void
     profile: ProfileType
-    match?: PathMatch<string> | null
-    params?:  Params<string>
+    match?: PathMatch | null
+    params?:  Params
 }
-
 
 const ProfileURLMatch = (props: ProfileContainerPropsType) => {
     const match = useMatch('/profile/:userId/');

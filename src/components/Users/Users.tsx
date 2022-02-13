@@ -20,6 +20,8 @@ export type UsersPropsType = {
     totalUsersCount: number
     currentPage: number
     onPageChanged: (pages: number) => void
+    toggleFollowingInProgress(isFetching: boolean, userId: number): void
+    followingInProgress: Array<number>
 }
 
 export let Users = (props: UsersPropsType) => {
@@ -51,22 +53,27 @@ export let Users = (props: UsersPropsType) => {
                        </NavLink>
                    </div>
                    <div>
-                       {u.followed ? <button onClick={() => {
+                       {u.followed ?
+                           <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                               props.toggleFollowingInProgress(true, u.id)
                                usersAPI.deleteUsers(u.id)
                                    .then(data => {
                                            if (data.resultCode === 0) {
                                                props.unFollow(u.id)
                                            }
+                                           props.toggleFollowingInProgress(false, u.id)
                                        }
                                    )
 
                            }}>Unfollow</button>
-                           : <button onClick={() => {
+                           : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                               props.toggleFollowingInProgress(true, u.id)
                                usersAPI.postUsers(u.id)
                                    .then(response => {
                                            if (response.data.resultCode === 0) {
                                                props.follow(u.id)
                                            }
+                                           props.toggleFollowingInProgress(false, u.id)
                                        }
                                    )
                            }}>Follow</button>}
