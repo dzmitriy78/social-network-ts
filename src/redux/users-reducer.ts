@@ -30,7 +30,6 @@ const usersReducer = (state = initialState, action: {
     count: number;
     isFetching: boolean
 }) => {
-
     switch (action.type) {
         case "FOLLOW":
         case "UNFOLLOW":
