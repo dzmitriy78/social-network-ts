@@ -5,3 +5,6 @@
 .posts {
     margin-top: 10px;
 }
+.btn {
+    cursor: pointer;
+}

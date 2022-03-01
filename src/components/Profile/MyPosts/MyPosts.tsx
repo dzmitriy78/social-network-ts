@@ -36,7 +36,7 @@ export const MyPosts = (props: MyPostsType) => {
                     <textarea onChange={onPostChange} value={props.newPostText}/>
                 </div>
                 <div>
-                    <button disabled={props.newPostText === ""} onClick={onAddPost}>Add post</button>
+                    <button className={classes.btn} disabled={props.newPostText === ""} onClick={onAddPost}>Add post</button>
                 </div>
                 <div className={classes.posts}>
                     {postElement}

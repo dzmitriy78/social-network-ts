@@ -1,9 +1,8 @@
 import React from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reducer";
+import {getProfile} from "../../redux/profile-reducer";
 import {Params, PathMatch, useMatch} from "react-router-dom";
-import {myAPI} from "../../api/api";
 
 export type ProfileType = {
     aboutMe: string
@@ -15,24 +14,23 @@ export type ProfileType = {
     userId: number
 }
 export type ProfileContainerPropsType = {
-    setUserProfile(profile: ProfileType): void
     profile: ProfileType
     match?: PathMatch | null
-    params?:  Params
+    params?: Params
+    getProfile(userId: string | undefined | number): void
 }
 
 const ProfileURLMatch = (props: ProfileContainerPropsType) => {
     const match = useMatch('/profile/:userId/');
-    return <ProfileContainer {...props} match={match} />;
+    return <ProfileContainer {...props} match={match}/>;
 }
+
 class ProfileContainer extends React.Component<ProfileContainerPropsType, ProfileType> {
     componentDidMount() {
         let userId = this.props.match ? this.props.match.params.userId : /*'My ID'*/7384;
-        myAPI.getProfile(userId)
-            .then(({ data }) => {
-            this.props.setUserProfile(data);
-        });
+        this.props.getProfile(userId)
     }
+
     render() {
         return (
             <Profile {...this.props} profile={this.props.profile}/>
@@ -47,4 +45,4 @@ function mapStateToProps(state: { profilePage: { profile: ProfileType; }; }) {
 }
 
 
-export default connect(mapStateToProps, {setUserProfile})(ProfileURLMatch)
+export default connect(mapStateToProps, {getProfile})(ProfileURLMatch)

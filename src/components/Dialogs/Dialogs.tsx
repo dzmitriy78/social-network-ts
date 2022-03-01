@@ -61,7 +61,7 @@ export function Dialogs(props: DialogsType) {
                               value={state.newDialogText}/>
                 </div>
                 <div>
-                    <button disabled={state.newDialogText === ""} onClick={addDialog}>Add post</button>
+                    <button className={classes.btn} disabled={state.newDialogText === ""} onClick={addDialog}>Add post</button>
                 </div>
             </div>
         </div>

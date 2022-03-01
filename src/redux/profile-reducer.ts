@@ -1,5 +1,6 @@
 import {PostDataType} from "./store";
 import {ProfileType} from "../components/Profile/ProfileContainer";
+import {myAPI} from "../api/api";
 
 export const updateNewPostText = "UPDATE-NEW-POST-TEXT";
 export const addPost = "ADD-POST";
@@ -17,7 +18,7 @@ let initialState = {
     profile: null
 }
 
-const profileReducer = (state: { postData: PostDataType[]; newPostText: string; } = initialState, action: { type: string; newText: string; newDialText: string; profile: ProfileType}) => {
+const profileReducer = (state: { postData: PostDataType[]; newPostText: string; } = initialState, action: { type: string; newText: string; newDialText: string; profile: ProfileType }) => {
     switch (action.type) {
         case "ADD-POST":
             let newPost: PostDataType = {
@@ -44,4 +45,14 @@ const profileReducer = (state: { postData: PostDataType[]; newPostText: string; 
             return state;
     }
 }
+
+export const getProfile = (userId: string | undefined | number) => {
+    return (dispatch: (arg0: { type: string; profile: ProfileType; }) => void) => {
+        myAPI.getProfile(userId)
+            .then(({data}) => {
+                dispatch(setUserProfile(data));
+            })
+    }
+}
+
 export default profileReducer;

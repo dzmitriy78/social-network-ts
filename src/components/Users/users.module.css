@@ -3,6 +3,16 @@
     height: 40px;
     border-radius: 50%;
 }
+.pages {
+    cursor: pointer;
+}
 .selectedPages {
     font-weight: bold;
+    color: saddlebrown;
+}
+.btn {
+    cursor: pointer;
+    color: darkblue;
+    border-radius: 10px;
+    background: darkgray;
 }

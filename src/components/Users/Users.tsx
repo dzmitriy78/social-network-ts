@@ -30,7 +30,7 @@ export let Users = (props: UsersPropsType) => {
         pages.push(i)
     }
     return <div>
-        <div>
+        <div className={styles.pages}>
             {pages.map(p => {
                 return <span key={p} onClick={() => props.onPageChanged(p)}
                              className={props.currentPage === p ? styles.selectedPages : ""}
@@ -47,12 +47,12 @@ export let Users = (props: UsersPropsType) => {
                             alt={"ava"}/>
                        </NavLink>
                    </div>
-                   <div>
+                   <div >
                        {u.followed ?
-                           <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                           <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
                                props.unfollowing(u.id)
                            }}>Unfollow</button>
-                           : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                           : <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
                                props.following(u.id)
                            }}>Follow</button>}
                    </div>
