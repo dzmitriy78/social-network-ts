@@ -1,11 +1,11 @@
 import {addDialogActionCreator, onDialogChangeActionCreator} from "../../redux/message-reducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
-import {MessagePageType} from "../../redux/store";
 
-let mapStateToProps = (state: { messagePage: MessagePageType }) => {
+let mapStateToProps = (state: { messagePage: any; auth: { isAuth: boolean; }; }) => {
     return {
-        messagePage: state.messagePage
+        messagePage: state.messagePage,
+        isAuth: state.auth.isAuth
     }
 }
 let mapDispatchToProps = (dispatch: (arg0: { type: string; newDialText?: string; }) => any) => {

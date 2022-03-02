@@ -2,7 +2,7 @@ import React from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {getProfile} from "../../redux/profile-reducer";
-import {Params, PathMatch, useMatch} from "react-router-dom";
+import {Navigate, Params, PathMatch, useMatch} from "react-router-dom";
 
 export type ProfileType = {
     aboutMe: string
@@ -18,6 +18,7 @@ export type ProfileContainerPropsType = {
     match?: PathMatch | null
     params?: Params
     getProfile(userId: string | undefined | number): void
+    isAuth: boolean
 }
 
 const ProfileURLMatch = (props: ProfileContainerPropsType) => {
@@ -32,16 +33,18 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType, Profil
     }
 
     render() {
+        if (!this.props.isAuth) return <Navigate replace to="/login"/>
         return (
             <Profile {...this.props} profile={this.props.profile}/>
         );
     }
 }
 
-function mapStateToProps(state: { profilePage: { profile: ProfileType; }; }) {
-    return ({
-        profile: state.profilePage.profile
-    })
+function mapStateToProps(state: { profilePage: { profile: any; }; auth: { isAuth: boolean; }; }) {
+    return {
+        profile: state.profilePage.profile,
+        isAuth: state.auth.isAuth
+    }
 }
 
 
