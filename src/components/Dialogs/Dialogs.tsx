@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Dialogs.module.css"
-import {NavLink, Navigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {DialogsDataType, MessageDataType, MessagePageType} from "../../redux/store";
 
 export type DialogsType = {
@@ -32,10 +32,10 @@ export function Dialogs(props: DialogsType) {
     let state = props.messagePage;
 
     let dialogsElement = state.dialogsData
-        .map(d => <Dialog key={d.id} avatar={d.avatar} name={d.name} id={d.id}/>);
+        .map(d => <Dialog key={d.name} avatar={d.avatar} name={d.name} id={d.id}/>);
 
     let messageElement = state.messageData
-        .map(m => <Message key={m.id} id={m.id} message={m.message}/>);
+        .map(m => <Message key={`${m.message}` + `${m.id}`} id={m.id} message={m.message}/>);
 
 
     let addDialog = () => {
@@ -48,8 +48,6 @@ export function Dialogs(props: DialogsType) {
         if (dialogText)
             props.onDialogChange(dialogText);
     }
-
-    if (!props.isAuth) return <Navigate replace to="/login"/>
 
     return (
         <div className={classes.dialogs}>

@@ -3,6 +3,7 @@ import {following, getUsers, setCurrentPage, unfollowing} from "../../redux/user
 import {Users, UsersType} from "./Users";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export type UsersContainerPropsType = {
     currentPage: number
@@ -65,9 +66,9 @@ let mapStateToProps = (state: {
     }
 }
 
-export default connect(mapStateToProps, {
+export default withAuthRedirect(connect(mapStateToProps, {
     following,
     unfollowing,
     setCurrentPage,
     getUsers
-})(UsersContainer)
+})(UsersContainer))

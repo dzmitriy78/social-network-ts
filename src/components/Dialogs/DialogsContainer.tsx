@@ -1,11 +1,13 @@
 import {addDialogActionCreator, onDialogChangeActionCreator} from "../../redux/message-reducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
+import React from "react";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {MessagePageType} from "../../redux/store";
 
-let mapStateToProps = (state: { messagePage: any; auth: { isAuth: boolean; }; }) => {
+let mapStateToProps = (state: { messagePage: MessagePageType }) => {
     return {
-        messagePage: state.messagePage,
-        isAuth: state.auth.isAuth
+        messagePage: state.messagePage
     }
 }
 let mapDispatchToProps = (dispatch: (arg0: { type: string; newDialText?: string; }) => any) => {
@@ -15,4 +17,6 @@ let mapDispatchToProps = (dispatch: (arg0: { type: string; newDialText?: string;
     }
 }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+let AuthRedirectComponent = withAuthRedirect(Dialogs)
+
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
