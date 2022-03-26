@@ -1,9 +1,10 @@
-import React from "react";
+import React, {Component} from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {getProfile} from "../../redux/profile-reducer";
 import {Params, PathMatch, useMatch} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 export type ProfileType = {
     aboutMe: string
@@ -21,9 +22,13 @@ export type ProfileContainerPropsType = {
     getProfile(userId: string | undefined | number): void
 }
 
-const ProfileURLMatch = (props: ProfileContainerPropsType) => {
-    const match = useMatch('/profile/:userId/');
-    return <AuthRedirectComponent {...props} match={match}/>;
+export const ProfileURLMatch = (Component: any) => {
+    let RouterComponent: (props: ProfileContainerPropsType) => JSX.Element;
+    RouterComponent = (props: ProfileContainerPropsType) => {
+        const match = useMatch('/profile/:userId/');
+        return <Component {...props} match={match}/>;
+    };
+    return RouterComponent
 }
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType, ProfileType> {
@@ -40,8 +45,6 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType, Profil
     }
 }
 
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
-
 function mapStateToProps(state: { profilePage: { profile: ProfileType; }; auth: { isAuth: boolean; }; }) {
     return {
         profile: state.profilePage.profile
@@ -49,4 +52,8 @@ function mapStateToProps(state: { profilePage: { profile: ProfileType; }; auth: 
 }
 
 
-export default connect(mapStateToProps, {getProfile})(ProfileURLMatch)
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {getProfile}),
+    ProfileURLMatch,
+    withAuthRedirect)
+(ProfileContainer)
