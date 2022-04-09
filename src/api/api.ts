@@ -20,10 +20,19 @@ export const usersAPI = {
             .then(response => response.data)
     }
 }
-export const myAPI = {
-    getProfile(userId: string | undefined | number) {
+export const profileAPI = {
+    getProfile(userId: number) {
         return instance.get(`profile/${userId}`)
     },
+    getStatus(userId: number) {
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status/`, {status})
+    }
+}
+
+export const myAPI = {
     authMe() {
         return instance.get(`auth/me`)
             .then(response => response.data)

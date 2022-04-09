@@ -2,25 +2,38 @@ import React, {useState} from 'react';
 
 interface ProfileStatusPropsType {
     status: string
+    updateStatus(status: string): void
 }
 
 const ProfileStatus = (props: ProfileStatusPropsType) => {
     const [editMode, setEditMode] = useState<boolean>(false)
+    const [status, setStatus] = useState<string>(props.status)
+
     const activateEditMode = () => {
         setEditMode(true)
+        setStatus("")
     }
     const deactivateEditMode = () => {
         setEditMode(false)
+        props.updateStatus(status)
+    }
+
+    const onStatusChange = (e: { currentTarget: { value: React.SetStateAction<string>; }; }) => {
+        setStatus(e.currentTarget.value)
     }
 
     return (
         <div>
             {!editMode
                 ? <div>
-                    <span onDoubleClick={activateEditMode}>{props.status}</span>
+                    <span onDoubleClick={activateEditMode}>{props.status || "no status"}</span>
                 </div>
                 : <div>
-                    <input autoFocus={true} onBlur={deactivateEditMode} defaultValue={props.status}/>
+                    <input
+                        onChange={onStatusChange}
+                        autoFocus={true}
+                        onBlur={deactivateEditMode}
+                        value={status}/>
                 </div>
             }
         </div>

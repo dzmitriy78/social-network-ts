@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getProfile} from "../../redux/profile-reducer";
+import {getProfile, getStatus, updateStatus} from "../../redux/profile-reducer";
 import {Params, PathMatch, useMatch} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
@@ -14,12 +14,16 @@ export type ProfileType = {
     lookingForAJobDescription: string
     photos: { small: string, large: string }
     userId: number
+    status: string
 }
 export type ProfileContainerPropsType = {
     profile: ProfileType
     match?: PathMatch | null
     params?: Params
-    getProfile(userId: string | undefined | number): void
+    getProfile(userId: number): void
+    getStatus(userId: number): void
+    status: string
+    updateStatus(status: string): void
 }
 
 export const ProfileURLMatch = (Component: any) => {
@@ -34,26 +38,37 @@ export const ProfileURLMatch = (Component: any) => {
 class ProfileContainer extends React.Component<ProfileContainerPropsType, ProfileType> {
     componentDidMount() {
         let userId = this.props.match ? this.props.match.params.userId : /*'My ID'*/7384;
-        this.props.getProfile(userId)
+        this.props.getProfile(userId as number)
+        this.props.getStatus(userId as number)
     }
 
     render() {
 
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props}
+                     profile={this.props.profile}
+                     status={this.props.status}
+                     updateStatus={this.props.updateStatus}
+            />
         );
     }
 }
 
-function mapStateToProps(state: { profilePage: { profile: ProfileType; }; auth: { isAuth: boolean; }; }) {
+function mapStateToProps(state: {
+    profilePage: {
+        status: string;
+        profile: ProfileType;
+    }; auth: { isAuth: boolean; };
+}) {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        status: state.profilePage.status
     }
 }
 
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfile}),
+    connect(mapStateToProps, {getProfile, getStatus, updateStatus}),
     ProfileURLMatch,
     withAuthRedirect)
 (ProfileContainer)
