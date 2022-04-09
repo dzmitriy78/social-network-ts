@@ -19,6 +19,6 @@ let mapDispatchToProps = (dispatch: (arg0: { type: string; newDialText?: string;
 }
 
 export const DialogsContainer = compose<React.ComponentType>(
-    withAuthRedirect,
+    /*withAuthRedirect,*/
     connect(mapStateToProps, mapDispatchToProps))
 (Dialogs)

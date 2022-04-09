@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 interface ProfileStatusPropsType {
     status: string
+
     updateStatus(status: string): void
 }
 
@@ -9,9 +10,12 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [status, setStatus] = useState<string>(props.status)
 
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
+
     const activateEditMode = () => {
         setEditMode(true)
-        setStatus("")
     }
     const deactivateEditMode = () => {
         setEditMode(false)
@@ -21,6 +25,7 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
     const onStatusChange = (e: { currentTarget: { value: React.SetStateAction<string>; }; }) => {
         setStatus(e.currentTarget.value)
     }
+
 
     return (
         <div>

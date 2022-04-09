@@ -29,12 +29,12 @@ export let Users = (props: UsersPropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-    return <div>
-        <div className={styles.pages}>
+    return <div >
+        <div className={styles.pageWrapper}>
             {pages.map(p => {
-                return <span key={p} onClick={() => props.onPageChanged(p)}
-                             className={props.currentPage === p ? styles.selectedPages : ""}
-                >{p}</span>
+                return <span key={p} onClick={() => {
+                    props.onPageChanged(p)
+                }} className={props.currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
             })}
         </div>
         {
@@ -47,7 +47,7 @@ export let Users = (props: UsersPropsType) => {
                             alt={"ava"}/>
                        </NavLink>
                    </div>
-                   <div >
+                   <div className={styles.follow}>
                        {u.followed ?
                            <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
                                props.unfollowing(u.id)
@@ -58,12 +58,12 @@ export let Users = (props: UsersPropsType) => {
                    </div>
                </span>
                         <span>
-                                <div>{u.name}</div>
-                                <div>{u.status}</div>
+                                <div className={styles.usersName}>{u.name}</div>
+                                <div className={styles.usersDescr}>{u.status}</div>
                             </span>
                         <span>
-                                <div>{"u.location.city"}</div>
-                                <div>{"u.location.country"}</div>
+                                <div className={styles.usersDescr}>{"u.location.city"}</div>
+                                <div className={styles.usersDescr}>{"u.location.country"}</div>
                             </span>
                     </div>
                 }

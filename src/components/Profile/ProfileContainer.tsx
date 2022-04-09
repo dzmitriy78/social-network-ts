@@ -70,5 +70,5 @@ function mapStateToProps(state: {
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getProfile, getStatus, updateStatus}),
     ProfileURLMatch,
-    withAuthRedirect)
+    /*withAuthRedirect*/)
 (ProfileContainer)

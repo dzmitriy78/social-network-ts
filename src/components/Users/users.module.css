@@ -2,17 +2,40 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    margin: 10px 0 0 10px;
 }
-.pages {
-    cursor: pointer;
-}
-.selectedPages {
-    font-weight: bold;
-    color: saddlebrown;
-}
+
 .btn {
     cursor: pointer;
     color: darkblue;
     border-radius: 10px;
     background: darkgray;
+}
+.pageWrapper {
+    margin-top: 10px;
+    display: flex;
+}
+.page {
+    padding: 5px;
+    border: teal 1px solid;
+    cursor: pointer;
+    background-color: #87a9e7;
+}
+.selectedPage {
+    font-weight: bold;
+    border: #464d91 2px solid;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #c9b08f;
+}
+.follow {
+    margin-left: 5px;
+}
+.usersDescr {
+    margin-left: 5px;
+}
+.usersName {
+    color: #542d07;
+    font-weight: bold;
+    margin-left: 5px;
 }
