@@ -11,19 +11,18 @@
     border-radius: 10px;
     background: darkgray;
 }
-.pageWrapper {
-    margin-top: 10px;
-    display: flex;
-}
+
 .page {
     padding: 5px;
     border: teal 1px solid;
+    border-radius: 5px;
     cursor: pointer;
     background-color: #87a9e7;
 }
 .selectedPage {
     font-weight: bold;
     border: #464d91 2px solid;
+    border-radius: 5px;
     padding: 5px;
     cursor: pointer;
     background-color: #c9b08f;
@@ -38,4 +37,23 @@
     color: #542d07;
     font-weight: bold;
     margin-left: 5px;
+}
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+.pagination .text {
+    opacity: 0.6;
+    font-size: 1rem;
+}
+.disabled {
+    background-color: transparent !important;
+    cursor: not-allowed;
+    opacity: 0.5;
+    padding: 5px;
+    border: teal 1px solid;
+    border-radius: 5px;
 }

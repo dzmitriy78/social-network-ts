@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./users.module.css"
 import userPhoto from "./../../assets/images/user.png"
 import {NavLink} from "react-router-dom";
+import usePagination from "../hooks/usePagination";
 
 export type UsersType = {
     id: number
@@ -23,19 +24,64 @@ export type UsersPropsType = {
 }
 
 export let Users = (props: UsersPropsType) => {
+    const {
+        firstContentIndex,
+        lastContentIndex,
+        nextPage,
+        prevPage,
+        page,
+        setPage,
+        totalPages,
+    } = usePagination({
+        contentPerPage: 10,
+        count: props.totalUsersCount,
+    });
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-    return <div >
-        <div className={styles.pageWrapper}>
-            {pages.map(p => {
-                return <span key={p} onClick={() => {
-                    props.onPageChanged(p)
-                }} className={props.currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
-            })}
+    return (<div>
+        <div>
+
+            {(
+                <div className={styles.pagination}>
+                    <p className={styles.text}>
+                        Page block:
+                        {page}/{totalPages}
+                    </p>
+                    <button
+                        onClick={prevPage}
+                        className={page === 1 ? styles.disabled : styles.page}
+                    >
+                        &larr;
+                    </button>
+
+                    {pages
+                        .slice(firstContentIndex, lastContentIndex)
+                        .map(p => {
+                            return <span key={p} onClick={() => {
+                                props.onPageChanged(p)
+                            }} className={props.currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
+                        })}
+                    {/*{[...Array(totalPages).keys()].map((el) => (
+                            <button
+                                onClick={() => setPage(el + 1)}
+                                key={el}
+                                className={`page ${page === el + 1 ? "active" : ""}`}
+                            >
+                                {el + 1}
+                            </button>
+                        ))}*/}
+                    <button
+                        onClick={nextPage}
+                        className={page === totalPages ? styles.page && styles.disabled : styles.page}
+                    >
+                        &rarr;
+                    </button>
+                </div>
+            )}
         </div>
         {
             props.users.map((u: UsersType) => {
@@ -49,12 +95,14 @@ export let Users = (props: UsersPropsType) => {
                    </div>
                    <div className={styles.follow}>
                        {u.followed ?
-                           <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                               props.unfollowing(u.id)
-                           }}>Unfollow</button>
-                           : <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                               props.following(u.id)
-                           }}>Follow</button>}
+                           <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)}
+                                   onClick={() => {
+                                       props.unfollowing(u.id)
+                                   }}>Unfollow</button>
+                           : <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)}
+                                     onClick={() => {
+                                         props.following(u.id)
+                                     }}>Follow</button>}
                    </div>
                </span>
                         <span>
@@ -69,5 +117,5 @@ export let Users = (props: UsersPropsType) => {
                 }
             )
         }
-    </div>
+    </div>)
 }

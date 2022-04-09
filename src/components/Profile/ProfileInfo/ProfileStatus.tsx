@@ -11,7 +11,11 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
     const [status, setStatus] = useState<string>(props.status)
 
     useEffect(() => {
-        setStatus(props.status)
+        if (props.status) {
+            setStatus(props.status)
+        } else {
+            setStatus("")
+        }
     }, [props.status])
 
     const activateEditMode = () => {
