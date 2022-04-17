@@ -8,7 +8,7 @@ import thunkMiddleware from "redux-thunk";
 
 
 
-let reducers = combineReducers(
+let RootReducer = combineReducers(
     {
         profilePage: profileReducer,
         messagePage: messageReducer,
@@ -18,6 +18,6 @@ let reducers = combineReducers(
     }
 )
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+let store = createStore(RootReducer, applyMiddleware(thunkMiddleware));
 
 export default store;
