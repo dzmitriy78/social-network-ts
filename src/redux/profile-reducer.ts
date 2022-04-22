@@ -57,7 +57,7 @@ export const getProfile = (userId: number) => {
     return (dispatch: (arg0: { type: string; profile: ProfileType; }) => void) => {
         profileAPI.getProfile(userId as number)
             .then(({data}) => {
-                dispatch(setUserProfile(data));
+                dispatch(setUserProfile(data))
             })
     }
 }
