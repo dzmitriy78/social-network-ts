@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./News.module.css"
 export function News () {
     return (
-        <div>
+        <div className={classes.news}>
             News
         </div>
     )

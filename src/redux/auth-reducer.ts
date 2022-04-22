@@ -1,7 +1,8 @@
 import {myAPI} from "../api/api";
 
-export const setAuthUserData = (userId: string, email: string, login: string) => ({
-    type: "SET_USER_DATA",
+const SET_USER_DATA = "SET-USER-DATA"
+export const setAuthUserData = (userId: number, email: string, login: string) => ({
+    type: SET_USER_DATA,
     data: {userId, email, login}
 });
 
@@ -12,10 +13,10 @@ let initialState = {
     isAuth: false
 }
 
-const authReducer = (state = initialState, action: { type: string; data: { userId: string, email: string, login: string, isAuth: boolean }; }) => {
+const authReducer = (state = initialState, action: { type: string; data: { userId: number, email: string, login: string, isAuth: boolean }; }) => {
 
     switch (action.type) {
-        case "SET_USER_DATA":
+        case SET_USER_DATA:
             return {
                 ...state,
                 ...action.data,
@@ -27,7 +28,7 @@ const authReducer = (state = initialState, action: { type: string; data: { userI
 }
 
 export const authMe = () => {
-    return (dispatch: (arg0: { type: string; data: { userId: string; email: string; login: string; }; }) => void) => {
+    return (dispatch: (arg0: { data: { login: string; userId: number; email: string }; type: string }) => void) => {
         myAPI.authMe()
             .then(data => {
                     if (data.resultCode === 0) {

@@ -42,6 +42,10 @@ export let Users = (props: UsersPropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
+    const goPageBlock = () => {
+        let num: any = prompt("Переход на страницу...")
+        setPage(num);
+    };
     return (<div>
         <div>
 
@@ -60,8 +64,8 @@ export let Users = (props: UsersPropsType) => {
 
                     {pages
                         .slice(firstContentIndex, lastContentIndex)
-                        .map(p => {
-                            return <span key={p} onClick={() => {
+                        .map((p,i) => {
+                            return <span key={i} onClick={() => {
                                 props.onPageChanged(p)
                             }} className={props.currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
                         })}
@@ -74,11 +78,15 @@ export let Users = (props: UsersPropsType) => {
                                 {el + 1}
                             </button>
                         ))}*/}
+
                     <button
                         onClick={nextPage}
                         className={page === totalPages ? styles.page && styles.disabled : styles.page}
                     >
                         &rarr;
+                    </button>
+                    <button className={styles.btn} onClick={goPageBlock}>
+                        Go to
                     </button>
                 </div>
             )}

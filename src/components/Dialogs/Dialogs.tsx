@@ -1,24 +1,13 @@
 import React from "react";
 import classes from "./Dialogs.module.css"
-import {NavLink} from "react-router-dom";
-import {DialogsDataType, MessageDataType, MessagePageType} from "../../redux/store";
+import {MessageDataType, MessagePageType} from "../../redux/store";
+import {Dialog} from "./Dialog/Dialog";
 
 export type DialogsType = {
     messagePage: MessagePageType
     addDialog(): void;
     onDialogChange(dialogText: string): void;
     isAuth: boolean
-}
-
-const Dialog = (props: DialogsDataType) => {
-    let path = "/dialogs/" + props.id;
-    return (
-        <div className={classes.dialog}>
-            <img src={props.avatar} alt={""}/>
-            <NavLink className={(DialogsData) => DialogsData.isActive ? classes.active : ""}
-                     to={path}>{props.name}</NavLink>
-        </div>
-    )
 }
 
 const Message = (props: MessageDataType) => {
@@ -35,7 +24,7 @@ export function Dialogs(props: DialogsType) {
         .map(d => <Dialog key={d.name} avatar={d.avatar} name={d.name} id={d.id}/>);
 
     let messageElement = state.messageData
-        .map(m => <Message key={`${m.message}` + `${m.id}`} id={m.id} message={m.message}/>);
+        .map((m,i )=> <Message key={i} id={m.id} message={m.message}/>);
 
 
     let addDialog = () => {

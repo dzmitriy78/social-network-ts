@@ -1,5 +1,6 @@
 import axios from "axios";
 import {ProfileType} from "../components/Profile/ProfileContainer";
+import {UsersType} from "../components/Users/Users";
 
 const instance = axios.create({
     withCredentials: true,
@@ -7,35 +8,16 @@ const instance = axios.create({
     headers: {"API-KEY": "a6e25988-0e21-403d-9590-97bddd744784"}
 })
 
-type RespUsersType = {
-            "name": string
-            "id": number
-            "photos": {
-                "small": string
-                "large": string
-            },
-            "status": string
-            "followed": boolean
+type GetUsersType = {
+    items: UsersType[]
+    totalCount: number
+    error: string
 }
 
-type GetUsersType = {
-    "items": RespUsersType[]
-    "totalCount": number
-    "error": string
-}
-type UpdateFollowAndStatusType = {
+type ResponseType<T> = {
     resultCode: number
     messages: string[]
-    data: {}
-}
-type GetAuthType = {
-    resultCode: number
-    messages: string[]
-    data: {
-        id: number
-        email: string
-        login: string
-    }
+    data: T
 }
 
 export const usersAPI = {
@@ -44,11 +26,11 @@ export const usersAPI = {
             .then(response => response.data)
     },
     unfollowUser(id: number) {
-        return instance.delete<UpdateFollowAndStatusType>(`follow/${id}`)
+        return instance.delete<ResponseType<{}>>(`follow/${id}`)
             .then(response => response.data)
     },
     followUser(id: number) {
-        return instance.post<UpdateFollowAndStatusType>(`follow/${id}`, {},)
+        return instance.post<ResponseType<{}>>(`follow/${id}`, {},)
             .then(response => response.data)
     }
 }
@@ -60,13 +42,13 @@ export const profileAPI = {
         return instance.get<string>(`profile/status/${userId}`)
     },
     updateStatus(status: string) {
-        return instance.put<UpdateFollowAndStatusType>(`profile/status/`, {status})
+        return instance.put<ResponseType<{}>>(`profile/status/`, {status})
     }
 }
 
 export const myAPI = {
     authMe() {
-        return instance.get<GetAuthType>(`auth/me`)
+        return instance.get<ResponseType<{id: number, email: string, login: string}>>(`auth/me`)
             .then(response => response.data)
     },
 }

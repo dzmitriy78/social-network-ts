@@ -1,10 +1,10 @@
 import {DialogsDataType, MessageDataType} from "./store";
 
-export const addDialog = "ADD-DIALOG";
-export const updateNewDialogText = "UPDATE-NEW-DIALOG-TEXT";
-export const addDialogActionCreator = () => ({type: addDialog});
+export const ADD_DIALOG = "ADD-DIALOG";
+export const UPDATE_NEW_DIALOG_TEXT = "UPDATE-NEW-DIALOG-TEXT";
+export const addDialogActionCreator = () => ({type: ADD_DIALOG});
 export const onDialogChangeActionCreator = (dialogText: string) => ({
-    type: updateNewDialogText,
+    type: UPDATE_NEW_DIALOG_TEXT,
     newDialText: dialogText
 });
 
@@ -39,7 +39,7 @@ let initialState = {
 const messageReducer = (state: { dialogsData: DialogsDataType[]; newDialogText: string; messageData: MessageDataType[]; } = initialState,
                         action: { type: string; newText: string; newDialText: string; }) => {
     switch (action.type) {
-        case "ADD-DIALOG":
+        case ADD_DIALOG:
             let newDialog = {
                 id: 10,
                 message: state.newDialogText,
@@ -49,7 +49,7 @@ const messageReducer = (state: { dialogsData: DialogsDataType[]; newDialogText: 
                 messageData: [...state.messageData, newDialog],
                 newDialogText: ""
             }
-        case "UPDATE-NEW-DIALOG-TEXT":
+        case UPDATE_NEW_DIALOG_TEXT:
             return {
                 ...state,
                 newDialogText: action.newDialText

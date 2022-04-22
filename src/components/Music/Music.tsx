@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Music.module.css"
 export function Music () {
     return (
-        <div>
+        <div className={classes.music}>
             Music
         </div>
     )

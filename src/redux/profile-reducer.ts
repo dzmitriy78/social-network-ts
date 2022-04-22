@@ -2,12 +2,15 @@ import {PostDataType} from "./store";
 import {ProfileType} from "../components/Profile/ProfileContainer";
 import {profileAPI} from "../api/api";
 
-export const updateNewPostText = "UPDATE-NEW-POST-TEXT";
-export const addPost = "ADD-POST";
-export const addPostActionCreator = () => ({type: addPost});
-export const updatePostActionCreator = (text: string) => ({type: updateNewPostText, newText: text})
-export const setUserProfile = (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile})
-export const setStatus = (status: string) => ({type: "SET_STATUS", status})
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const ADD_POST = "ADD-POST";
+const SET_USER_PROFILE = "SET-USER-PROFILE";
+const SET_STATUS = "SET-STATUS";
+
+export const addPostActionCreator = () => ({type: ADD_POST});
+export const updatePostActionCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
+export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile})
+export const setStatus = (status: string) => ({type: SET_STATUS, status})
 
 let initialState = {
     postData: [
@@ -22,7 +25,7 @@ let initialState = {
 
 const profileReducer = (state: { postData: PostDataType[]; newPostText: string; } = initialState, action: { type: string; newText: string; newDialText: string; profile: ProfileType; status: string }) => {
     switch (action.type) {
-        case "ADD-POST":
+        case ADD_POST:
             let newPost: PostDataType = {
                 id: 7,
                 message: state.newPostText,
@@ -33,17 +36,17 @@ const profileReducer = (state: { postData: PostDataType[]; newPostText: string; 
                 postData: [...state.postData, newPost],
                 newPostText: ""
             }
-        case "UPDATE-NEW-POST-TEXT":
+        case UPDATE_NEW_POST_TEXT:
             return {
                 ...state,
                 newPostText: action.newText
             }
-        case "SET_USER_PROFILE":
+        case SET_USER_PROFILE:
             return {
                 ...state,
                 profile: action.profile
             }
-        case "SET_STATUS":
+        case SET_STATUS:
             return {
                 ...state,
                 status: action.status
@@ -55,7 +58,7 @@ const profileReducer = (state: { postData: PostDataType[]; newPostText: string; 
 
 export const getProfile = (userId: number) => {
     return (dispatch: (arg0: { type: string; profile: ProfileType; }) => void) => {
-        profileAPI.getProfile(userId as number)
+        profileAPI.getProfile(userId)
             .then(({data}) => {
                 dispatch(setUserProfile(data))
             })
@@ -63,7 +66,7 @@ export const getProfile = (userId: number) => {
 }
 export const getStatus = (userId: number) => {
     return (dispatch: (arg0: { type: string; status: string }) => void) => {
-        profileAPI.getStatus(userId as number)
+        profileAPI.getStatus(userId)
             .then(({data}) => {
                 dispatch(setStatus(data));
             })

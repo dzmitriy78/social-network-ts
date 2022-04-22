@@ -8,7 +8,7 @@ const Login = () => (
         <Formik
             initialValues={{email: "", password: "", rememberMe: false}}
             validate={values => {
-                const errors:any = {};
+                const errors: any = {};
                 if (!values.email) {
                     errors.email = 'Required';
                 } else if (
@@ -27,13 +27,15 @@ const Login = () => (
                     <div>
                         <Field type={'text'} name={'email'} placeholder={'e-mail'}/>
                     </div>
-                    <ErrorMessage name="email" component="div"/>
-
+                    <div style={{color:"orange"}}>
+                        <ErrorMessage name="email" component="div"/>
+                    </div>
                     <div>
                         <Field type={'password'} name={'password'} placeholder={'password'}/>
                     </div>
+                    <div style={{color:"orange"}}>
                     <ErrorMessage name="password" component="div"/>
-
+                    </div>
                     <div>
                         <Field type={'checkbox'} name={'rememberMe'}/>
                         <label htmlFor={'rememberMe'}> remember me </label>
