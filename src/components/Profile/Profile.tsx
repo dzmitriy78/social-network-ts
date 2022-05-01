@@ -1,8 +1,15 @@
 import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {ProfileType} from "./ProfileContainer";
 
-export const Profile = (props: any) => {
+interface ProfileProps {
+    profile: ProfileType
+    status: string
+    updateStatus(status: string): void
+}
+
+export const Profile = (props: ProfileProps) => {
 
     return (
         <div>

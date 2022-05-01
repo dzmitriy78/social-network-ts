@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 
 interface ProfileStatusPropsType {
     status: string
-
     updateStatus(status: string): void
 }
 

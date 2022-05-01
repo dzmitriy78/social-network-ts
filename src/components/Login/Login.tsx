@@ -2,13 +2,23 @@ import React from "react";
 import {Formik, Form, Field, ErrorMessage} from "formik";
 import loginFormSchema from "../FormValidation/LoginFormSchema";
 
+interface Values {
+    email: string
+    password: string
+    rememberMe: boolean
+}
+
+interface Errors {
+    email?: string
+}
+
 const Login = () => (
     <div>
         <h1>Login</h1>
         <Formik
             initialValues={{email: "", password: "", rememberMe: false}}
             validate={values => {
-                const errors: any = {};
+                const errors: Errors = {};
                 if (!values.email) {
                     errors.email = 'Required';
                 } else if (
@@ -18,7 +28,7 @@ const Login = () => (
                 }
                 return errors;
             }}
-            onSubmit={(values) => {
+            onSubmit={(values: Values) => {
                 console.log(values)
             }}
             validationSchema={loginFormSchema}>
@@ -27,14 +37,14 @@ const Login = () => (
                     <div>
                         <Field type={'text'} name={'email'} placeholder={'e-mail'}/>
                     </div>
-                    <div style={{color:"orange"}}>
+                    <div style={{color: "orange"}}>
                         <ErrorMessage name="email" component="div"/>
                     </div>
                     <div>
                         <Field type={'password'} name={'password'} placeholder={'password'}/>
                     </div>
-                    <div style={{color:"orange"}}>
-                    <ErrorMessage name="password" component="div"/>
+                    <div style={{color: "orange"}}>
+                        <ErrorMessage name="password" component="div"/>
                     </div>
                     <div>
                         <Field type={'checkbox'} name={'rememberMe'}/>

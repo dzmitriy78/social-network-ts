@@ -1,47 +1,43 @@
 import React from "react";
 import classes from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {PostDataType} from "../../../redux/store";
+import PostForm, {FormikValues} from "../../form/PostForm";
 
+export type PostDataType = {
+    id: number
+    message: string
+    likeCount: number
+}
 type MyPostsType = {
     postData: Array<PostDataType>
-    newPostText: string
-    updatePostActionCreator(text: string): void
-    addPost(): void
+    addPost(text: string): void
 }
 
 export const MyPosts = (props: MyPostsType) => {
 
     let postElement = props.postData
-        .map((p: { id: number; message: string; likeCount: number; }) => <Post key={p.id} id={p.id} message={p.message} likes={p.likeCount}/>)
+        .map((p: { id: number; message: string; likeCount: number; }, i: number) =>
+            <Post key={i} id={p.id}
+                  message={p.message}
+                  likes={p.likeCount}/>)
 
 
-    let onAddPost = () => {
-        props.addPost();
-    }
-
-    let onPostChange = (e: { target: { value: string; }; }) => {
-
-        let text = e.target.value;
-        if (text) {
-            props.updatePostActionCreator(text);
-        }
+    let addMyPost = (values: FormikValues) => {
+        props.addPost(values.text)
     }
 
     return (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <div>
-                    <textarea onChange={onPostChange} value={props.newPostText}/>
-                </div>
-                <div>
-                    <button className={classes.btn} disabled={props.newPostText === ""} onClick={onAddPost}>Add post</button>
-                </div>
+                <PostForm callback={addMyPost}/>
                 <div className={classes.posts}>
                     {postElement}
                 </div>
             </div>
         </div>
     )
+}
+export type ProfilePageType = {
+    postData: Array<PostDataType>
 }

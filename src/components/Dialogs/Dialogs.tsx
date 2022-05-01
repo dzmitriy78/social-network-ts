@@ -1,12 +1,13 @@
 import React from "react";
 import classes from "./Dialogs.module.css"
-import {MessageDataType, MessagePageType} from "../../redux/store";
 import {Dialog} from "./Dialog/Dialog";
+import PostForm, {FormikValues} from "../form/PostForm";
+import {MessageDataType} from "../../redux/message-reducer";
+import {MessagePageType} from "./DialogsContainer";
 
 export type DialogsType = {
     messagePage: MessagePageType
-    addDialog(): void;
-    onDialogChange(dialogText: string): void;
+    addDialog(dialogText: string): void
     isAuth: boolean
 }
 
@@ -21,21 +22,14 @@ export function Dialogs(props: DialogsType) {
     let state = props.messagePage;
 
     let dialogsElement = state.dialogsData
-        .map(d => <Dialog key={d.name} avatar={d.avatar} name={d.name} id={d.id}/>);
+        .map((d, i) => <Dialog key={i} avatar={d.avatar} name={d.name} id={d.id}/>);
 
     let messageElement = state.messageData
-        .map((m,i )=> <Message key={i} id={m.id} message={m.message}/>);
+        .map((m, i) => <Message key={i} id={m.id} message={m.message}/>);
 
 
-    let addDialog = () => {
-        props.addDialog();
-    }
-
-    let onDialogChange = (e: { target: { value: string; }; }) => {
-
-        let dialogText = e.target.value;
-        if (dialogText)
-            props.onDialogChange(dialogText);
+    let addDialog = (values: FormikValues) => {
+        props.addDialog(values.text);
     }
 
     return (
@@ -45,16 +39,17 @@ export function Dialogs(props: DialogsType) {
             </div>
             <div className={classes.messages}>
                 {messageElement}
-
-                <div>
+                <PostForm callback = {addDialog}/>
+                {/*<div>
                     <textarea onChange={onDialogChange}
                               value={state.newDialogText}/>
                 </div>
                 <div>
                     <button className={classes.btn} disabled={state.newDialogText === ""} onClick={addDialog}>Add post
                     </button>
-                </div>
+                </div>*/}
             </div>
         </div>
     )
 }
+

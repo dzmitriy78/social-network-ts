@@ -1,21 +1,18 @@
-import {addPostActionCreator, updatePostActionCreator} from "../../../redux/profile-reducer";
-import {MyPosts} from "./MyPosts";
+import {addPostActionCreator} from "../../../redux/profile-reducer";
+import {MyPosts, PostDataType, ProfilePageType} from "./MyPosts";
 import {connect} from "react-redux";
-import {PostDataType, ProfilePageType} from "../../../redux/store";
 
 let mapStateToProps = (state: {
     profilePage: ProfilePageType;
-    postData: PostDataType; newPostText: string;
+    postData: PostDataType
 }) => {
     return {
-        postData: state.profilePage.postData,
-        newPostText: state.profilePage.newPostText
+        postData: state.profilePage.postData
     }
 }
-let mapDispatchToProps = (dispatch: (arg0: { type: string; newText?: string; }) => any) => {
+let mapDispatchToProps = (dispatch: (arg0: { type: string }) => any) => {
     return {
-        addPost: () => dispatch(addPostActionCreator()),
-        updatePostActionCreator: (text: string) => dispatch(updatePostActionCreator(text))
+        addPost: (text: string) => dispatch(addPostActionCreator(text))
     }
 }
 

@@ -1,12 +1,5 @@
-import {DialogsDataType, MessageDataType} from "./store";
-
 export const ADD_DIALOG = "ADD-DIALOG";
-export const UPDATE_NEW_DIALOG_TEXT = "UPDATE-NEW-DIALOG-TEXT";
-export const addDialogActionCreator = () => ({type: ADD_DIALOG});
-export const onDialogChangeActionCreator = (dialogText: string) => ({
-    type: UPDATE_NEW_DIALOG_TEXT,
-    newDialText: dialogText
-});
+export const addDialogActionCreator = (dialogText: string) => ({type: ADD_DIALOG, dialogText})
 
 let initialState = {
     dialogsData: [
@@ -32,30 +25,33 @@ let initialState = {
         {id: 4, message: "Yes"},
         {id: 5, message: "hi"},
         {id: 6, message: "hi"},
-    ],
-    newDialogText: "",
+    ]
 }
 
-const messageReducer = (state: { dialogsData: DialogsDataType[]; newDialogText: string; messageData: MessageDataType[]; } = initialState,
-                        action: { type: string; newText: string; newDialText: string; }) => {
+export type DialogsDataType = {
+    id: number
+    name: string
+    avatar: string
+}
+export type MessageDataType = {
+    id: number
+    message: string
+}
+const messageReducer = (state: { dialogsData: DialogsDataType[]; messageData: MessageDataType[]; } = initialState,
+                        action: { type: string; dialogText: string; }) => {
     switch (action.type) {
         case ADD_DIALOG:
             let newDialog = {
                 id: 10,
-                message: state.newDialogText,
+                message: action.dialogText,
             }
             return {
                 ...state,
                 messageData: [...state.messageData, newDialog],
                 newDialogText: ""
             }
-        case UPDATE_NEW_DIALOG_TEXT:
-            return {
-                ...state,
-                newDialogText: action.newDialText
-            }
         default:
-            return state;
+            return state
     }
 }
 export default messageReducer;

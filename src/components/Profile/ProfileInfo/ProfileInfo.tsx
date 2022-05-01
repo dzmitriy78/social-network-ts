@@ -29,16 +29,16 @@ export const ProfileInfo = (props: ProfileInfoType) => {
                                updateStatus={props.updateStatus}
                 />
                 <div>
-                    <h4>{"Имя:" + " " + props.profile.fullName}</h4>
+                    <h4>{`Имя: ${props.profile.fullName}`}</h4>
                 </div>
                 <div>
-                    {"Обо мне:" + " " + props.profile.aboutMe}
+                    {`Обо мне: ${props.profile.aboutMe}`}
                 </div>
                 <div>
-                    {"Контакты:" + " " + props.profile.contacts.vk}
+                    {`Контакты: ${props.profile.contacts.vk}`}
                 </div>
                 <div>
-                    {"В поиске работы?" + " " + props.profile.lookingForAJobDescription}
+                    {`В поиске работы? ${props.profile.lookingForAJobDescription}`}
                 </div>
             </div>
         </div>
