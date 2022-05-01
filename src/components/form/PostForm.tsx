@@ -1,5 +1,8 @@
 import React from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
+import classes from "./PostForm.module.css"
+import {text} from "stream/consumers";
+import {postFormSchema} from "./formValidation/loginFormSchema";
 
 
 export interface FormikValues {
@@ -30,6 +33,7 @@ const PostForm = (props: PostFormProps) => {
                     props.callback(values)
                     actions.resetForm({values: ""})
                 }}
+                validationSchema={postFormSchema}
             >
                 {() => (
                     <Form>
@@ -38,7 +42,7 @@ const PostForm = (props: PostFormProps) => {
                                    name={'text'}
                                    placeholder={'text'}/>
                         </div>
-                        <div style={{color: "orange"}}>
+                        <div className={classes.errorMessage}>
                             <ErrorMessage name="text" component="div"/>
                         </div>
                         <button type={'submit'}>Add post</button>

@@ -3,6 +3,7 @@ import classes from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader";
 import {ProfileType} from "../ProfileContainer";
 import ProfileStatus from "./ProfileStatus";
+import rootImg from "./../../../assets/images/rootImg.jpg"
 
 type ProfileInfoType = {
     profile: ProfileType
@@ -18,9 +19,7 @@ export const ProfileInfo = (props: ProfileInfoType) => {
     return (
         <div className={classes.profileInfo}>
             <div>
-                <img
-                    src="https://p4.wallpaperbetter.com/wallpaper/198/347/760/astronaut-vortex-4k-8k-wallpaper-preview.jpg"
-                    alt={'avatar'}/>
+                <img src={rootImg} alt={"rootImg"}/>
             </div>
             <div className={classes.description}>
                 <img
