@@ -2,12 +2,15 @@
     grid-area: h;
     background-color: #7c6154;
 }
+
 .header img {
     width: 70px;
 }
+
 .loginBlock {
     float: right;
 }
+
 .loginBlock a {
     color: white;
 }

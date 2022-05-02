@@ -3,6 +3,7 @@ import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import React from "react";
 import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export type MessagePageType = {
     dialogsData: Array<DialogsDataType>
@@ -21,6 +22,6 @@ let mapDispatchToProps = (dispatch: (arg0: { type: string }) => any) => {
 }
 
 export const DialogsContainer = compose<React.ComponentType>(
-    /*withAuthRedirect,*/
+    withAuthRedirect,
     connect(mapStateToProps, mapDispatchToProps))
 (Dialogs)

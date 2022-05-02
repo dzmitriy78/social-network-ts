@@ -1,9 +1,9 @@
 import {myAPI} from "../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA"
-export const setAuthUserData = (userId: number, email: string, login: string) => ({
+export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
     type: SET_USER_DATA,
-    data: {userId, email, login}
+    data: {userId, email, login, isAuth}
 });
 
 let initialState = {
@@ -20,7 +20,6 @@ const authReducer = (state = initialState, action: { type: string; data: { userI
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
             }
         default:
             return state;
@@ -28,12 +27,34 @@ const authReducer = (state = initialState, action: { type: string; data: { userI
 }
 
 export const authMe = () => {
-    return (dispatch: (arg0: { data: { login: string; userId: number; email: string }; type: string }) => void) => {
+    return (dispatch: (arg0: { data: { isAuth: boolean; login: string | null; userId: number | null; email: string | null }; type: string }) => void) => {
         myAPI.authMe()
             .then(data => {
                     if (data.resultCode === 0) {
                         let {id, email, login} = data.data;
-                        dispatch(setAuthUserData(id, email, login));
+                        dispatch(setAuthUserData(id, email, login, true));
+                    }
+                }
+            )
+    }
+}
+export const login = (email: string, password: string, rememberMe: boolean) => {
+    return (dispatch: (arg0: (dispatch: (arg0: { data: { isAuth: boolean; login: string | null; userId: number | null; email: string | null }; type: string }) => void) => void) => void) => {
+        myAPI.login(email, password, rememberMe)
+            .then(data => {
+                    if (data.resultCode === 0) {
+                        dispatch(authMe());
+                    }
+                }
+            )
+    }
+}
+export const logout = () => {
+    return (dispatch: (arg0: { type: string; data: { userId: number | null; email: string | null; login: string | null; isAuth: boolean; }; }) => void) => {
+        myAPI.logout()
+            .then(data => {
+                    if (data.resultCode === 0) {
+                        dispatch(setAuthUserData(null, null, null, false));
                     }
                 }
             )

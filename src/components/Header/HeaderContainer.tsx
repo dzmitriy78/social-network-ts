@@ -1,13 +1,16 @@
 import React from "react";
-import {Header, HeaderPropsType} from "./Header";
+import {Header} from "./Header";
 import {connect} from "react-redux";
-import {authMe} from "../../redux/auth-reducer";
+import {authMe, logout} from "../../redux/auth-reducer";
 
-type HeaderContainerPropsType = {
+type HeaderPropsType = {
     authMe(): void
+    logout(): void
+    isAuth: boolean
+    login: string
 }
 
-class HeaderContainer extends React.Component<HeaderContainerPropsType, HeaderPropsType> {
+class HeaderContainer extends React.Component<HeaderPropsType, HeaderPropsType> {
     componentDidMount() {
         this.props.authMe()
     }
@@ -24,4 +27,4 @@ function mapStateToProps(state: { auth: { isAuth: boolean; login: string; }; }) 
     }
 }
 
-export default connect(mapStateToProps, {authMe})(HeaderContainer);
+export default connect(mapStateToProps, {authMe, logout})(HeaderContainer);
