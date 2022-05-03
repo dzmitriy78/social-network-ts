@@ -32,6 +32,8 @@ export type ProfileContainerPropsType = {
     getStatus(userId: number): void
     status: string
     updateStatus(status: string): void
+    meId: number
+    userId: number
 }
 
 export const ProfileURLMatch = (Component: any) => {
@@ -45,7 +47,9 @@ export const ProfileURLMatch = (Component: any) => {
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType, ProfileType> {
     componentDidMount() {
-        let userId = this.props.match ? this.props.match.params.userId : /*'My ID'*/7384;
+        let userId = this.props.match
+            ? this.props.match.params.userId
+            : this.props.meId;
         this.props.getProfile(userId as number)
         this.props.getStatus(userId as number)
     }
@@ -65,18 +69,23 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType, Profil
 function mapStateToProps(state: {
     profilePage: {
         status: string;
-        profile: ProfileType;
-    }; auth: { isAuth: boolean; };
+        profile: ProfileType
+    }
+    auth: {
+        isAuth: boolean
+        userId: number
+    }
 }) {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        meId: state.auth.userId,
+        isAuth: state.auth.isAuth
     }
 }
-
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getProfile, getStatus, updateStatus}),
     ProfileURLMatch,
-    /*withAuthRedirect*/)
+    withAuthRedirect)
 (ProfileContainer)

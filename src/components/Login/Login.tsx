@@ -18,7 +18,7 @@ interface Errors {
 interface LoginPropsType {
     isAuth: boolean
 
-    login(email: string, password: string, rememberMe: boolean): void
+    login(email: string, password: string, rememberMe: boolean, setStatus: (status: string) => void): void
 }
 
 const Login = (props: LoginPropsType) => {
@@ -35,17 +35,17 @@ const Login = (props: LoginPropsType) => {
                     if (!values.email) {
                         errors.email = 'Required';
                     } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                        !/^[A-Z\d._%+-]+@[A-Z\d.-]+\.[A-Z]{2,}$/i.test(values.email)
                     ) {
                         errors.email = 'Invalid email address';
                     }
                     return errors;
                 }}
-                onSubmit={(values: Values) => {
-                    props.login(values.email, values.password, values.rememberMe)
+                onSubmit={(values: Values, {setStatus}) => {
+                    props.login(values.email, values.password, values.rememberMe, setStatus)
                 }}
                 validationSchema={loginFormSchema}>
-                {() => (
+                {({status}) => (
                     <Form>
                         <div>
                             <Field type={'text'} name={'email'} placeholder={'e-mail'}/>
@@ -63,7 +63,7 @@ const Login = (props: LoginPropsType) => {
                             <Field type={'checkbox'} name={'rememberMe'}/>
                             <label htmlFor={'rememberMe'}> remember me </label>
                         </div>
-
+                        <div style={{color: "orange"}}>{status ? <span>{status}</span> : null}</div>
                         <button type={'submit'}>Log in</button>
                     </Form>
                 )}

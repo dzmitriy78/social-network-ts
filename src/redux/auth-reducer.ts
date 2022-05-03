@@ -38,12 +38,14 @@ export const authMe = () => {
             )
     }
 }
-export const login = (email: string, password: string, rememberMe: boolean) => {
+export const login = (email: string, password: string, rememberMe: boolean, setStatus: (status: string) => void) => {
     return (dispatch: (arg0: (dispatch: (arg0: { data: { isAuth: boolean; login: string | null; userId: number | null; email: string | null }; type: string }) => void) => void) => void) => {
         myAPI.login(email, password, rememberMe)
             .then(data => {
                     if (data.resultCode === 0) {
                         dispatch(authMe());
+                    } else {
+                        setStatus(data.messages.join(" "))
                     }
                 }
             )
