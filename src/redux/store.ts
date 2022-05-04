@@ -5,7 +5,7 @@ import sidebarReducer from "./sidebar-reducer";
 import usersReducer from "./users-reducer";
 import authReducer from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";
-
+import initialReducer from "./initial-reducer";
 
 
 let RootReducer = combineReducers(
@@ -14,7 +14,8 @@ let RootReducer = combineReducers(
         messagePage: messageReducer,
         usersPage: usersReducer,
         sidebar: sidebarReducer,
-        auth: authReducer
+        auth: authReducer,
+        initial: initialReducer
     }
 )
 

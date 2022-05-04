@@ -1,7 +1,6 @@
 import React from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import classes from "./PostForm.module.css"
-import {text} from "stream/consumers";
 import {postFormSchema} from "./formValidation/loginFormSchema";
 
 
