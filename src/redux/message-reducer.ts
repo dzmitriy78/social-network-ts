@@ -1,7 +1,27 @@
 export const ADD_DIALOG = "ADD-DIALOG";
-export const addDialogActionCreator = (dialogText: string) => ({type: ADD_DIALOG, dialogText})
+export const addDialogActionCreator = (dialogText: string): messageActionType => ({type: ADD_DIALOG, dialogText})
 
-let initialState = {
+type initialStateType = {
+    dialogsData: DialogsDataType[]
+    messageData: MessageDataType[]
+    newDialogText: string
+}
+
+type messageActionType = {
+    type: typeof ADD_DIALOG
+    dialogText: string
+}
+
+export type DialogsDataType = {
+    id: number
+    name: string
+    avatar: string
+}
+export type MessageDataType = {
+    id: number
+    message: string
+}
+let initialState: initialStateType = {
     dialogsData: [
         {id: 1, name: "Dim", avatar: "https://klike.net/uploads/posts/2019-03/1551511801_1.jpg"},
         {id: 2, name: "Andrew", avatar: "https://cdn.freelance.ru/images/att/1324133_900_600.png"},
@@ -25,20 +45,11 @@ let initialState = {
         {id: 4, message: "Yes"},
         {id: 5, message: "hi"},
         {id: 6, message: "hi"},
-    ]
+    ],
+    newDialogText: ""
 }
 
-export type DialogsDataType = {
-    id: number
-    name: string
-    avatar: string
-}
-export type MessageDataType = {
-    id: number
-    message: string
-}
-const messageReducer = (state: { dialogsData: DialogsDataType[]; messageData: MessageDataType[]; } = initialState,
-                        action: { type: string; dialogText: string; }) => {
+const messageReducer = (state = initialState, action: messageActionType): initialStateType => {
     switch (action.type) {
         case ADD_DIALOG:
             let newDialog = {

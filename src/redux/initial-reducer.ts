@@ -1,13 +1,21 @@
 import {authMe} from "./auth-reducer";
 
 const SET_INITIALISE = "SET-INITIALISE"
-export const setInitialData = () => ({type: SET_INITIALISE})
+export const setInitialData = (): initialActionType => ({type: SET_INITIALISE})
 
-let initialState = {
-    initialize: false,
+type initialStateType = {
+    initialize: boolean
 }
 
-const initialReducer = (state = initialState, action: { type: string }) => {
+let initialState: initialStateType = {
+    initialize: false
+}
+
+type initialActionType = {
+    type: typeof SET_INITIALISE
+}
+
+const initialReducer = (state = initialState, action: initialActionType): initialStateType => {
 
     switch (action.type) {
         case SET_INITIALISE:

@@ -2,15 +2,35 @@ import {ProfileType} from "../components/Profile/ProfileContainer";
 import {profileAPI} from "../api/api";
 import {PostDataType} from "../components/Profile/MyPosts/MyPosts";
 
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_STATUS = "SET-STATUS";
 
-export const addPostActionCreator = (text: string) => ({type: ADD_POST, text});
-export const updatePostActionCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
-export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile})
-export const setStatus = (status: string) => ({type: SET_STATUS, status})
+export const addPostActionCreator = (text: string): AddPostActionType => ({type: ADD_POST, text});
+export const setUserProfile = (profile: ProfileType): setUserProfileActionType => ({type: SET_USER_PROFILE, profile})
+export const setStatus = (status: string): setStatusActionType => ({type: SET_STATUS, status})
+
+type initialStateType = {
+    postData: PostDataType[]
+    profile: ProfileType | null
+    status: string
+    newPostText: string
+}
+
+type profileActionType = AddPostActionType | setUserProfileActionType | setStatusActionType
+
+type setUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    profile: ProfileType
+}
+type AddPostActionType = {
+    type: typeof ADD_POST
+    text: string
+}
+type setStatusActionType = {
+    type: typeof SET_STATUS
+    status: string
+}
 
 let initialState = {
     postData: [
@@ -19,11 +39,12 @@ let initialState = {
         {id: 3, message: "Hi", likeCount: 1},
     ],
     profile: null,
-    status: ""
+    status: "",
+    newPostText: ""
 }
 
-const profileReducer = (state: { postData: PostDataType[] } = initialState,
-                        action: { type: string; text: string; newDialText: string; profile: ProfileType; status: string }) => {
+const profileReducer = (state: initialStateType = initialState,
+                        action: profileActionType): initialStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost: PostDataType = {
@@ -52,7 +73,7 @@ const profileReducer = (state: { postData: PostDataType[] } = initialState,
 }
 
 export const getProfile = (userId: number) => {
-    return (dispatch: (arg0: { type: string; profile: ProfileType; }) => void) => {
+    return (dispatch: (arg0: setUserProfileActionType) => void) => {
         profileAPI.getProfile(userId)
             .then(({data}) => {
                 dispatch(setUserProfile(data))
@@ -60,7 +81,7 @@ export const getProfile = (userId: number) => {
     }
 }
 export const getStatus = (userId: number) => {
-    return (dispatch: (arg0: { type: string; status: string }) => void) => {
+    return (dispatch: (arg0: setStatusActionType) => void) => {
         profileAPI.getStatus(userId)
             .then(({data}) => {
                 dispatch(setStatus(data));
@@ -68,7 +89,7 @@ export const getStatus = (userId: number) => {
     }
 }
 export const updateStatus = (status: string) => {
-    return (dispatch: (arg0: { type: string; status: string; }) => void) => {
+    return (dispatch: (arg0: setStatusActionType) => void) => {
         profileAPI.updateStatus(status)
             .then(({data}) => {
                 if (data.resultCode === 0) {

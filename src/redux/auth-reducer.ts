@@ -1,25 +1,46 @@
 import {myAPI} from "../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA"
-export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
+export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): authActionType => <authActionType>({
     type: SET_USER_DATA,
-    data: {userId, email, login, isAuth}
+    payload: {userId, email, login, isAuth}
 });
 
-let initialState = {
+type initialStateType = {
+    userId: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+    captchaUrl: string | null
+}
+
+type authPayloadType = {
+    userId: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean,
+}
+
+type authActionType =  {
+    type: typeof SET_USER_DATA,
+    payload: authPayloadType
+}
+
+let initialState: initialStateType = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    captchaUrl: null
 }
 
-const authReducer = (state = initialState, action: { type: string; data: { userId: number, email: string, login: string, isAuth: boolean }; }) => {
+const authReducer = (state = initialState, action: authActionType ): initialStateType => {
 
     switch (action.type) {
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
+                ...action.payload,
             }
         default:
             return state;
@@ -27,7 +48,7 @@ const authReducer = (state = initialState, action: { type: string; data: { userI
 }
 
 export const authMe = () => {
-    return (dispatch: (arg0: { data: { isAuth: boolean; login: string | null; userId: number | null; email: string | null }; type: string }) => void) => {
+    return (dispatch: (arg0: authActionType) => void) => {
         return myAPI.authMe()
             .then(data => {
                     if (data.resultCode === 0) {
@@ -39,7 +60,7 @@ export const authMe = () => {
     }
 }
 export const login = (email: string, password: string, rememberMe: boolean, setStatus: (status: string) => void) => {
-    return (dispatch: (arg0: (dispatch: (arg0: { data: { isAuth: boolean; login: string | null; userId: number | null; email: string | null }; type: string }) => void) => void) => void) => {
+    return (dispatch: (arg0: (dispatch: (arg0: authActionType) => void) => Promise<void>) => void) => {
         myAPI.login(email, password, rememberMe)
             .then(data => {
                     if (data.resultCode === 0) {
@@ -52,7 +73,7 @@ export const login = (email: string, password: string, rememberMe: boolean, setS
     }
 }
 export const logout = () => {
-    return (dispatch: (arg0: { type: string; data: { userId: number | null; email: string | null; login: string | null; isAuth: boolean; }; }) => void) => {
+    return (dispatch: (arg0: authActionType) => void) => {
         myAPI.logout()
             .then(data => {
                     if (data.resultCode === 0) {
