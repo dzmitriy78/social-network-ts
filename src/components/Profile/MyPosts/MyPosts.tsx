@@ -38,6 +38,3 @@ export const MyPosts = (props: MyPostsType) => {
         </div>
     )
 }
-export type ProfilePageType = {
-    postData: Array<PostDataType>
-}

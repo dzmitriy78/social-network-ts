@@ -1,12 +1,15 @@
 import {myAPI} from "../api/api";
+import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./store";
 
 const SET_USER_DATA = "SET-USER-DATA"
-export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): authActionType => <authActionType>({
+export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): AuthActionType => ({
     type: SET_USER_DATA,
     payload: {userId, email, login, isAuth}
 });
 
-type initialStateType = {
+type InitialStateType = {
     userId: number | null
     email: string | null
     login: string | null
@@ -14,19 +17,22 @@ type initialStateType = {
     captchaUrl: string | null
 }
 
-type authPayloadType = {
+type AuthPayloadType = {
     userId: number | null
     email: string | null
     login: string | null
     isAuth: boolean,
 }
 
-type authActionType =  {
+type AuthActionType = {
     type: typeof SET_USER_DATA,
-    payload: authPayloadType
+    payload: AuthPayloadType
 }
 
-let initialState: initialStateType = {
+type DispatchType = Dispatch<AuthActionType>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthActionType>
+
+let initialState: InitialStateType = {
     userId: null,
     email: null,
     login: null,
@@ -34,7 +40,7 @@ let initialState: initialStateType = {
     captchaUrl: null
 }
 
-const authReducer = (state = initialState, action: authActionType ): initialStateType => {
+const authReducer = (state = initialState, action: AuthActionType): InitialStateType => {
 
     switch (action.type) {
         case SET_USER_DATA:
@@ -48,7 +54,7 @@ const authReducer = (state = initialState, action: authActionType ): initialStat
 }
 
 export const authMe = () => {
-    return (dispatch: (arg0: authActionType) => void) => {
+    return (dispatch: DispatchType) => {
         return myAPI.authMe()
             .then(data => {
                     if (data.resultCode === 0) {
@@ -59,21 +65,16 @@ export const authMe = () => {
             )
     }
 }
-export const login = (email: string, password: string, rememberMe: boolean, setStatus: (status: string) => void) => {
-    return (dispatch: (arg0: (dispatch: (arg0: authActionType) => void) => Promise<void>) => void) => {
-        myAPI.login(email, password, rememberMe)
-            .then(data => {
-                    if (data.resultCode === 0) {
-                        dispatch(authMe());
-                    } else {
-                        setStatus(data.messages.join(" "))
-                    }
-                }
-            )
+export const login = (email: string, password: string, rememberMe: boolean, setStatus: (status: string) => void): ThunkType => {
+    return async (dispatch) => {
+        let data = await myAPI.login(email, password, rememberMe)
+        data.resultCode === 0 ?
+            await dispatch(authMe())
+            : setStatus(data.messages.join(" "))
     }
 }
 export const logout = () => {
-    return (dispatch: (arg0: authActionType) => void) => {
+    return (dispatch: DispatchType) => {
         myAPI.logout()
             .then(data => {
                     if (data.resultCode === 0) {

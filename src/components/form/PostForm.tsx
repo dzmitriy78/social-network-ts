@@ -28,9 +28,9 @@ const PostForm = (props: PostFormProps) => {
                     }
                     return errors;
                 }}
-                onSubmit={(values: FormikValues, actions: any) => {
+                onSubmit={(values, actions) => {
                     props.callback(values)
-                    actions.resetForm({values: ""})
+                    actions.resetForm({values: {text: ""}})
                 }}
                 validationSchema={postFormSchema}
             >
@@ -39,7 +39,7 @@ const PostForm = (props: PostFormProps) => {
                         <div>`
                             <Field component={'textarea'}
                                    name={'text'}
-                                   placeholder={'text'}/>
+                                   placeholder={'write a message'}/>
                         </div>
                         <div className={classes.errorMessage}>
                             <ErrorMessage name="text" component="div"/>

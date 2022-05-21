@@ -1,6 +1,8 @@
 import {ProfileType} from "../components/Profile/ProfileContainer";
 import {profileAPI} from "../api/api";
 import {PostDataType} from "../components/Profile/MyPosts/MyPosts";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./store";
 
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
@@ -72,30 +74,26 @@ const profileReducer = (state: initialStateType = initialState,
     }
 }
 
-export const getProfile = (userId: number) => {
-    return (dispatch: (arg0: setUserProfileActionType) => void) => {
-        profileAPI.getProfile(userId)
-            .then(({data}) => {
-                dispatch(setUserProfile(data))
-            })
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, profileActionType>
+
+export const getProfile = (userId: number): ThunkType => {
+    return async (dispatch) => {
+       let res = await profileAPI.getProfile(userId)
+                dispatch(setUserProfile(res.data))
     }
 }
-export const getStatus = (userId: number) => {
-    return (dispatch: (arg0: setStatusActionType) => void) => {
-        profileAPI.getStatus(userId)
-            .then(({data}) => {
-                dispatch(setStatus(data));
-            })
+export const getStatus = (userId: number): ThunkType => {
+    return async (dispatch) => {
+        let res = await profileAPI.getStatus(userId)
+                dispatch(setStatus(res.data));
     }
 }
-export const updateStatus = (status: string) => {
-    return (dispatch: (arg0: setStatusActionType) => void) => {
-        profileAPI.updateStatus(status)
-            .then(({data}) => {
-                if (data.resultCode === 0) {
-                    dispatch(setStatus(status));
+export const updateStatus = (status: string): ThunkType => {
+    return async (dispatch)  => {
+        let res = await  profileAPI.updateStatus(status)
+                if (res.data.resultCode === 0) {
+                    dispatch(setStatus(status))
                 }
-            })
     }
 }
 

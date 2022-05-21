@@ -11,13 +11,13 @@ export type DialogsType = {
     isAuth: boolean
 }
 
-const Message = (props: MessageDataType) => {
+const Message: React.FC<MessageDataType> = (props) => {
     return (
         <div className={classes.message}>{props.message}</div>
     )
 }
 
-export function Dialogs(props: DialogsType) {
+export const Dialogs:React.FC<DialogsType>=(props)=> {
 
     let state = props.messagePage;
 
@@ -40,14 +40,6 @@ export function Dialogs(props: DialogsType) {
             <div className={classes.messages}>
                 {messageElement}
                 <PostForm callback = {addDialog}/>
-                {/*<div>
-                    <textarea onChange={onDialogChange}
-                              value={state.newDialogText}/>
-                </div>
-                <div>
-                    <button className={classes.btn} disabled={state.newDialogText === ""} onClick={addDialog}>Add post
-                    </button>
-                </div>*/}
             </div>
         </div>
     )

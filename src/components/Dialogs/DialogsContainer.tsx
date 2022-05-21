@@ -4,18 +4,18 @@ import {connect} from "react-redux";
 import React from "react";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {AppStateType} from "../../redux/store";
 
 export type MessagePageType = {
     dialogsData: Array<DialogsDataType>
-    newDialogText: string
     messageData: Array<MessageDataType>
 }
-let mapStateToProps = (state: { messagePage: MessagePageType }) => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         messagePage: state.messagePage
     }
 }
-let mapDispatchToProps = (dispatch: (arg0: { type: string }) => any) => {
+let mapDispatchToProps = (dispatch: (arg0: { type: "ADD-DIALOG"; dialogText: string; }) => any) => {
     return {
         addDialog: (dialogText: string) => dispatch(addDialogActionCreator(dialogText)),
     }

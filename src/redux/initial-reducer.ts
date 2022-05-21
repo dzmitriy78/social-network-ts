@@ -1,21 +1,23 @@
 import {authMe} from "./auth-reducer";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./store";
 
 const SET_INITIALISE = "SET-INITIALISE"
-export const setInitialData = (): initialActionType => ({type: SET_INITIALISE})
+export const setInitialData = (): InitialActionType => ({type: SET_INITIALISE})
 
-type initialStateType = {
+type InitialStateType = {
     initialize: boolean
 }
 
-let initialState: initialStateType = {
+let initialState: InitialStateType = {
     initialize: false
 }
 
-type initialActionType = {
+type InitialActionType = {
     type: typeof SET_INITIALISE
 }
 
-const initialReducer = (state = initialState, action: initialActionType): initialStateType => {
+const initialReducer = (state = initialState, action: InitialActionType): InitialStateType => {
 
     switch (action.type) {
         case SET_INITIALISE:
@@ -28,13 +30,12 @@ const initialReducer = (state = initialState, action: initialActionType): initia
     }
 }
 
-export const initial = () => (dispatch: any) => {
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, InitialActionType>
+
+export const initial = (): ThunkType => async (dispatch) => {
     let promise = dispatch(authMe())
-    Promise.all([promise])
-        .then(() => {
-                dispatch(setInitialData())
-            }
-        )
+    await Promise.all([promise])
+    dispatch(setInitialData())
 }
 
 export default initialReducer;

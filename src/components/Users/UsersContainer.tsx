@@ -5,6 +5,7 @@ import React from "react";
 import Preloader from "../common/Preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {AppStateType} from "../../redux/store";
 
 export type UsersContainerPropsType = {
     currentPage: number
@@ -47,16 +48,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersType>
     }
 }
 
-let mapStateToProps = (state: {
-    usersPage: {
-        users: UsersType[],
-        pageSize: number,
-        totalUsersCount: number,
-        currentPage: number;
-        isFetching: boolean;
-        followingInProgress: []
-    };
-}) => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,

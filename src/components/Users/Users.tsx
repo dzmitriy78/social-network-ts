@@ -23,7 +23,7 @@ export type UsersPropsType = {
     followingInProgress: Array<number>
 }
 
-export let Users = (props: UsersPropsType) => {
+export let Users: React.FC< UsersPropsType> = (props) => {
     const {
         firstContentIndex,
         lastContentIndex,

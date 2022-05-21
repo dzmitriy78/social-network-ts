@@ -4,7 +4,6 @@ export const addDialogActionCreator = (dialogText: string): messageActionType =>
 type initialStateType = {
     dialogsData: DialogsDataType[]
     messageData: MessageDataType[]
-    newDialogText: string
 }
 
 type messageActionType = {
@@ -45,8 +44,7 @@ let initialState: initialStateType = {
         {id: 4, message: "Yes"},
         {id: 5, message: "hi"},
         {id: 6, message: "hi"},
-    ],
-    newDialogText: ""
+    ]
 }
 
 const messageReducer = (state = initialState, action: messageActionType): initialStateType => {
@@ -59,7 +57,6 @@ const messageReducer = (state = initialState, action: messageActionType): initia
             return {
                 ...state,
                 messageData: [...state.messageData, newDialog],
-                newDialogText: ""
             }
         default:
             return state
