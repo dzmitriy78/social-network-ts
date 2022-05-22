@@ -11,22 +11,22 @@ export type PostDataType = {
 type MyPostsType = {
     postData: Array<PostDataType>
     addPost(text: string): void
+    isAuth: boolean
 }
 
-export const MyPosts = (props: MyPostsType) => {
+export const MyPosts: React.FC<MyPostsType> = ({postData, addPost, isAuth}) => {
 
-    let postElement = props.postData
-        .map((p: { id: number; message: string; likeCount: number; }, i: number) =>
+    let postElement = postData
+        .map((p: PostDataType, i: number) =>
             <Post key={i} id={p.id}
                   message={p.message}
                   likes={p.likeCount}/>)
 
 
     let addMyPost = (values: FormikValues) => {
-        props.addPost(values.text)
+        addPost(values.text)
     }
-
-    return (
+    return isAuth ? (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
             <div>
@@ -36,5 +36,5 @@ export const MyPosts = (props: MyPostsType) => {
                 </div>
             </div>
         </div>
-    )
+    ) : <div></div>;
 }

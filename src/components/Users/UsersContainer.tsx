@@ -18,6 +18,7 @@ export type UsersContainerPropsType = {
     isFetching: boolean
     followingInProgress: Array<number>
     getUsers(currentPage: number, pageSize: number): void
+    isAuth: boolean
 }
 
 class UsersContainer extends React.Component<UsersContainerPropsType, UsersType> {
@@ -43,6 +44,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersType>
                 unfollowing={this.props.unfollowing}
                 pageSize={this.props.pageSize}
                 followingInProgress={this.props.followingInProgress}
+                isAuth = {this.props.isAuth}
             />
         </>
     }
@@ -55,7 +57,8 @@ let mapStateToProps = (state: AppStateType) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress,
+        isAuth: state.auth.isAuth
     }
 }
 

@@ -21,6 +21,7 @@ export type UsersPropsType = {
     currentPage: number
     onPageChanged: (pages: number) => void
     followingInProgress: Array<number>
+    isAuth: boolean
 }
 
 export let Users: React.FC< UsersPropsType> = (props) => {
@@ -103,11 +104,11 @@ export let Users: React.FC< UsersPropsType> = (props) => {
                    </div>
                    <div className={styles.follow}>
                        {u.followed ?
-                           <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)}
+                           <button className={styles.btn} disabled={!props.isAuth || props.followingInProgress.some(id => id === u.id)}
                                    onClick={() => {
                                        props.unfollowing(u.id)
                                    }}>Unfollow</button>
-                           : <button className={styles.btn} disabled={props.followingInProgress.some(id => id === u.id)}
+                           : <button className={styles.btn} disabled={!props.isAuth || props.followingInProgress.some(id => id === u.id)}
                                      onClick={() => {
                                          props.following(u.id)
                                      }}>Follow</button>}

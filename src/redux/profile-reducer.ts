@@ -8,7 +8,7 @@ const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_STATUS = "SET-STATUS";
 
-export const addPostActionCreator = (text: string): AddPostActionType => ({type: ADD_POST, text});
+export const addPost = (text: string): AddPostActionType => ({type: ADD_POST, text});
 export const setUserProfile = (profile: ProfileType): setUserProfileActionType => ({type: SET_USER_PROFILE, profile})
 export const setStatus = (status: string): setStatusActionType => ({type: SET_STATUS, status})
 

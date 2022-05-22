@@ -1,17 +1,12 @@
-import {addPostActionCreator} from "../../../redux/profile-reducer";
+import {addPost} from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/store";
 
 let mapStateToProps = (state: AppStateType) => {
     return {
-        postData: state.profilePage.postData
+        postData: state.profilePage.postData,
+        isAuth: state.auth.isAuth
     }
 }
-let mapDispatchToProps = (dispatch: (arg0: { type: "ADD-POST"; text: string; }) => any) => {
-    return {
-        addPost: (text: string) => dispatch(addPostActionCreator(text))
-    }
-}
-
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export const MyPostsContainer = connect(mapStateToProps, {addPost})(MyPosts)

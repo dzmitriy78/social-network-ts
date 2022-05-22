@@ -14,11 +14,17 @@ import {connect} from "react-redux";
 import {initial} from "./redux/initial-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 
-const App = (props: { initial: () => void; initialize: boolean; }) => {
+type AppPropsType = {
+    initial: () => void
+    initialize: boolean
+}
+
+const App: React.FC<AppPropsType> = ({initial, initialize}) => {
     useEffect(() => {
-        props.initial()
-    }, [])
-    if (!props.initialize) {
+        initial()
+        console.log("effect")
+    }, [initial])
+    if (!initialize) {
         return <Preloader/>
 
     }
