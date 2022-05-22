@@ -37,18 +37,27 @@ export const usersAPI = {
 export const profileAPI = {
     getProfile(userId: number) {
         return instance.get<ProfileType>(`profile/${userId}`)
+            .then(res=>res.data)
     },
     getStatus(userId: number) {
         return instance.get<string>(`profile/status/${userId}`)
+            .then(res=>res.data)
     },
     updateStatus(status: string) {
         return instance.put<ResponseType<{}>>(`profile/status/`, {status})
+            .then(res=>res.data)
     }
+}
+
+type MeResponseType = {
+    id: number
+    email: string
+    login: string
 }
 
 export const myAPI = {
     authMe() {
-        return instance.get<ResponseType<{ id: number, email: string, login: string }>>(`auth/me`)
+        return instance.get<ResponseType<MeResponseType>>(`auth/me`)
             .then(response => response.data)
     },
     login(email: string, password: string, rememberMe: boolean) {

@@ -79,19 +79,19 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, profileAction
 export const getProfile = (userId: number): ThunkType => {
     return async (dispatch) => {
        let res = await profileAPI.getProfile(userId)
-                dispatch(setUserProfile(res.data))
+                dispatch(setUserProfile(res))
     }
 }
 export const getStatus = (userId: number): ThunkType => {
     return async (dispatch) => {
         let res = await profileAPI.getStatus(userId)
-                dispatch(setStatus(res.data));
+                dispatch(setStatus(res));
     }
 }
 export const updateStatus = (status: string): ThunkType => {
     return async (dispatch)  => {
         let res = await  profileAPI.updateStatus(status)
-                if (res.data.resultCode === 0) {
+                if (res.resultCode === 0) {
                     dispatch(setStatus(status))
                 }
     }
