@@ -1,4 +1,4 @@
-import {addPost} from "../../../redux/profile-reducer";
+import {addPost, deletePost} from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/store";
@@ -9,4 +9,4 @@ let mapStateToProps = (state: AppStateType) => {
         isAuth: state.auth.isAuth
     }
 }
-export const MyPostsContainer = connect(mapStateToProps, {addPost})(MyPosts)
+export const MyPostsContainer = connect(mapStateToProps, {addPost, deletePost})(MyPosts)

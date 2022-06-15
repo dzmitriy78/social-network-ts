@@ -5,10 +5,12 @@ import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
 
 const ADD_POST = "ADD-POST";
+const DELETE_POST = "DELETE-POST"
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_STATUS = "SET-STATUS";
 
 export const addPost = (text: string): AddPostActionType => ({type: ADD_POST, text});
+export const deletePost = (postId: number) => ({type: DELETE_POST, postId}) as const
 export const setUserProfile = (profile: ProfileType): setUserProfileActionType => ({type: SET_USER_PROFILE, profile})
 export const setStatus = (status: string): setStatusActionType => ({type: SET_STATUS, status})
 
@@ -19,7 +21,7 @@ type initialStateType = {
     newPostText: string
 }
 
-type profileActionType = AddPostActionType | setUserProfileActionType | setStatusActionType
+type profileActionType = AddPostActionType | setUserProfileActionType | setStatusActionType | deletePostAT
 
 type setUserProfileActionType = {
     type: typeof SET_USER_PROFILE
@@ -29,6 +31,7 @@ type AddPostActionType = {
     type: typeof ADD_POST
     text: string
 }
+type deletePostAT = ReturnType<typeof deletePost>
 type setStatusActionType = {
     type: typeof SET_STATUS
     status: string
@@ -69,6 +72,11 @@ const profileReducer = (state: initialStateType = initialState,
                 ...state,
                 status: action.status
             }
+        case DELETE_POST:
+            return {
+                ...state,
+                postData: state.postData.filter(p => p.id !== action.postId ? p : "")
+            }
         default:
             return state;
     }
@@ -78,22 +86,22 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, profileAction
 
 export const getProfile = (userId: number): ThunkType => {
     return async (dispatch) => {
-       let res = await profileAPI.getProfile(userId)
-                dispatch(setUserProfile(res))
+        let res = await profileAPI.getProfile(userId)
+        dispatch(setUserProfile(res))
     }
 }
 export const getStatus = (userId: number): ThunkType => {
     return async (dispatch) => {
         let res = await profileAPI.getStatus(userId)
-                dispatch(setStatus(res));
+        dispatch(setStatus(res));
     }
 }
 export const updateStatus = (status: string): ThunkType => {
-    return async (dispatch)  => {
-        let res = await  profileAPI.updateStatus(status)
-                if (res.resultCode === 0) {
-                    dispatch(setStatus(status))
-                }
+    return async (dispatch) => {
+        let res = await profileAPI.updateStatus(status)
+        if (res.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
     }
 }
 

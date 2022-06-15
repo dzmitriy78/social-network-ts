@@ -44,7 +44,7 @@ const PostForm = (props: PostFormProps) => {
                         <div className={classes.errorMessage}>
                             <ErrorMessage name="text" component="div"/>
                         </div>
-                        <button type={'submit'}>Add post</button>
+                        <button style={{cursor:"pointer"}} type={'submit'}>Add post</button>
                     </Form>
                 )}
             </Formik>

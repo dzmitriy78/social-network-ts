@@ -10,8 +10,8 @@ type ProfileInfoType = {
     status: string
     updateStatus(status: string): void
 }
-export const ProfileInfo = (props: ProfileInfoType) => {
-    if (!props.profile) {
+export const ProfileInfo: React.FC<ProfileInfoType> = ({profile, status, updateStatus}) => {
+    if (!profile) {
         return (
             <Preloader/>
         )
@@ -23,21 +23,21 @@ export const ProfileInfo = (props: ProfileInfoType) => {
             </div>
             <div className={classes.description}>
                 <img
-                    src={props.profile.photos.small} alt={"photos"}/>
-                <ProfileStatus status={props.status}
-                               updateStatus={props.updateStatus}
+                    src={profile.photos.small} alt={"photos"}/>
+                <ProfileStatus status={status}
+                               updateStatus={updateStatus}
                 />
                 <div>
-                    <h4>{`Имя: ${props.profile.fullName}`}</h4>
+                    <h4>{`Имя: ${profile.fullName}`}</h4>
                 </div>
                 <div>
-                    {`Обо мне: ${props.profile.aboutMe}`}
+                    {`Обо мне: ${profile.aboutMe}`}
                 </div>
                 <div>
-                    {`Контакты: ${props.profile.contacts.vk}`}
+                    {`Контакты: ${profile.contacts.vk}`}
                 </div>
                 <div>
-                    {`В поиске работы? ${props.profile.lookingForAJobDescription}`}
+                    {`В поиске работы? ${profile.lookingForAJobDescription}`}
                 </div>
             </div>
         </div>

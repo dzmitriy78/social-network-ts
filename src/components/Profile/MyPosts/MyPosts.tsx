@@ -11,15 +11,21 @@ export type PostDataType = {
 type MyPostsType = {
     postData: Array<PostDataType>
     addPost(text: string): void
+    deletePost(postId: number): void
     isAuth: boolean
 }
 
-export const MyPosts: React.FC<MyPostsType> = ({postData, addPost, isAuth}) => {
+export const MyPosts: React.FC<MyPostsType> = ({postData, addPost, deletePost, isAuth}) => {
+
+    const deleteMyPost=(id: number)=>{
+        deletePost(id)
+    }
 
     let postElement = postData
         .map((p: PostDataType, i: number) =>
             <Post key={i} id={p.id}
                   message={p.message}
+                  deletePost={deleteMyPost}
                   likes={p.likeCount}/>)
 
 

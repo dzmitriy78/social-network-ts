@@ -22,7 +22,6 @@ type AppPropsType = {
 const App: React.FC<AppPropsType> = ({initial, initialize}) => {
     useEffect(() => {
         initial()
-        console.log("effect")
     }, [initial])
     if (!initialize) {
         return <Preloader/>
