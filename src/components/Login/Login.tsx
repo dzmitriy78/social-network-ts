@@ -21,8 +21,8 @@ interface LoginPropsType {
     login(email: string, password: string, rememberMe: boolean, setStatus: (status: string) => void): void
 }
 
-const Login = (props: LoginPropsType) => {
-    if (props.isAuth) {
+const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
+    if (isAuth) {
         return <Navigate replace to="/profile"/>
     }
     return (
@@ -42,7 +42,7 @@ const Login = (props: LoginPropsType) => {
                     return errors;
                 }}
                 onSubmit={(values: Values, {setStatus}) => {
-                    props.login(values.email, values.password, values.rememberMe, setStatus)
+                    login(values.email, values.password, values.rememberMe, setStatus)
                 }}
                 validationSchema={loginFormSchema}>
                 {({status}) => (

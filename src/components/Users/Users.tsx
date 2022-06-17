@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./users.module.css"
-import userPhoto from "./../../assets/images/user.png"
-import {NavLink} from "react-router-dom";
 import usePagination from "../hooks/usePagination";
+import {User} from "./User";
 
 export type UsersType = {
     id: number
@@ -24,7 +23,7 @@ export type UsersPropsType = {
     isAuth: boolean
 }
 
-export let Users: React.FC< UsersPropsType> = (props) => {
+export let Users: React.FC<UsersPropsType> = (props) => {
     const {
         firstContentIndex,
         lastContentIndex,
@@ -43,17 +42,17 @@ export let Users: React.FC< UsersPropsType> = (props) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-    const goPageBlock = () => {
+    const goPage = () => {
         let num: any = prompt("Переход на страницу...")
-        setPage(num);
-    };
+        setPage(Math.ceil(num / 10))
+        props.onPageChanged(num)
+    }
     return (<div>
         <div>
 
             {(
                 <div className={styles.pagination}>
                     <p className={styles.text}>
-                        Page block:
                         {page}/{totalPages}
                     </p>
                     <button
@@ -65,20 +64,11 @@ export let Users: React.FC< UsersPropsType> = (props) => {
 
                     {pages
                         .slice(firstContentIndex, lastContentIndex)
-                        .map((p,i) => {
+                        .map((p, i) => {
                             return <span key={i} onClick={() => {
                                 props.onPageChanged(p)
                             }} className={props.currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
                         })}
-                    {/*{[...Array(totalPages).keys()].map((el) => (
-                            <button
-                                onClick={() => setPage(el + 1)}
-                                key={el}
-                                className={`page ${page === el + 1 ? "active" : ""}`}
-                            >
-                                {el + 1}
-                            </button>
-                        ))}*/}
 
                     <button
                         onClick={nextPage}
@@ -86,45 +76,23 @@ export let Users: React.FC< UsersPropsType> = (props) => {
                     >
                         &rarr;
                     </button>
-                    <button className={styles.btn} onClick={goPageBlock}>
+                    <button className={styles.btn} onClick={goPage}>
                         Go to
                     </button>
                 </div>
             )}
         </div>
         {
-            props.users.map((u: UsersType) => {
-                    return <div key={u.id}>
-               <span>
-                   <div>
-                       <NavLink to={"/profile/" + u.id}>
-                       <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userAvatar}
-                            alt={"ava"}/>
-                       </NavLink>
-                   </div>
-                   <div className={styles.follow}>
-                       {u.followed ?
-                           <button className={styles.btn} disabled={!props.isAuth || props.followingInProgress.some(id => id === u.id)}
-                                   onClick={() => {
-                                       props.unfollowing(u.id)
-                                   }}>Unfollow</button>
-                           : <button className={styles.btn} disabled={!props.isAuth || props.followingInProgress.some(id => id === u.id)}
-                                     onClick={() => {
-                                         props.following(u.id)
-                                     }}>Follow</button>}
-                   </div>
-               </span>
-                        <span>
-                                <div className={styles.usersName}>{u.name}</div>
-                                <div className={styles.usersDescr}>{u.status}</div>
-                            </span>
-                        <span>
-                                <div className={styles.usersDescr}>{"u.location.city"}</div>
-                                <div className={styles.usersDescr}>{"u.location.country"}</div>
-                            </span>
-                    </div>
-                }
-            )
+            props.users.map((u, i) =>
+                <User key={i}
+                      user={u}
+                      isAuth={props.isAuth}
+                      following={props.following}
+                      followingInProgress={props.followingInProgress}
+                      unfollowing={props.unfollowing}
+                />)
         }
+
+
     </div>)
 }

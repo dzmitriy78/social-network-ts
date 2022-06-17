@@ -23,11 +23,13 @@ export type UsersContainerPropsType = {
 
 class UsersContainer extends React.Component<UsersContainerPropsType, UsersType> {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
     }
 
     onPageChanged = (numberPage: number) => {
-        this.props.getUsers(numberPage, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.getUsers(numberPage, pageSize)
         this.props.setCurrentPage(numberPage)
     }
 
@@ -44,7 +46,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersType>
                 unfollowing={this.props.unfollowing}
                 pageSize={this.props.pageSize}
                 followingInProgress={this.props.followingInProgress}
-                isAuth = {this.props.isAuth}
+                isAuth={this.props.isAuth}
             />
         </>
     }
@@ -63,7 +65,7 @@ let mapStateToProps = (state: AppStateType) => {
 }
 
 export default compose<React.ComponentType>(
-   /* withAuthRedirect,*/
+    /* withAuthRedirect,*/
     connect(mapStateToProps, {
         following, unfollowing, setCurrentPage, getUsers
     }))

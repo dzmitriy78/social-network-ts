@@ -1,5 +1,5 @@
 export const ADD_DIALOG = "ADD-DIALOG";
-export const addDialogActionCreator = (dialogText: string): messageActionType => ({type: ADD_DIALOG, dialogText})
+export const addDialog = (dialogText: string): messageActionType => ({type: ADD_DIALOG, dialogText})
 
 type initialStateType = {
     dialogsData: DialogsDataType[]

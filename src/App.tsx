@@ -25,7 +25,6 @@ const App: React.FC<AppPropsType> = ({initial, initialize}) => {
     }, [initial])
     if (!initialize) {
         return <Preloader/>
-
     }
     return (
         <div className='app-wrapper'>

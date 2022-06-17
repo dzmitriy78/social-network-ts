@@ -8,13 +8,13 @@ export type DialogType = {
     avatar: string
 }
 
-export const Dialog = (props: DialogType) => {
-    let path = `/dialogs/${props.id}`;
+export const Dialog: React.FC<DialogType> = ({avatar, id, name}) => {
+    let path = `/dialogs/${id}`;
     return (
         <div className={classes.dialog}>
-            <img src={props.avatar} alt={""}/>
+            <img src={avatar} alt={""}/>
             <NavLink className={(DialogsData) => DialogsData.isActive ? classes.active : ""}
-                     to={path}>{props.name}</NavLink>
+                     to={path}>{name}</NavLink>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import {addDialogActionCreator, DialogsDataType, MessageDataType} from "../../redux/message-reducer";
+import {addDialog, DialogsDataType, MessageDataType} from "../../redux/message-reducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import React from "react";
@@ -15,13 +15,8 @@ let mapStateToProps = (state: AppStateType) => {
         messagePage: state.messagePage
     }
 }
-let mapDispatchToProps = (dispatch: (arg0: { type: "ADD-DIALOG"; dialogText: string; }) => any) => {
-    return {
-        addDialog: (dialogText: string) => dispatch(addDialogActionCreator(dialogText)),
-    }
-}
 
 export const DialogsContainer = compose<React.ComponentType>(
     withAuthRedirect,
-    connect(mapStateToProps, mapDispatchToProps))
+    connect(mapStateToProps, {addDialog}))
 (Dialogs)

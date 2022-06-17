@@ -74,14 +74,11 @@ export const login = (email: string, password: string, rememberMe: boolean, setS
     }
 }
 export const logout = () => {
-    return (dispatch: DispatchType) => {
-        myAPI.logout()
-            .then(data => {
-                    if (data.resultCode === 0) {
-                        dispatch(setAuthUserData(null, null, null, false));
-                    }
-                }
-            )
+    return async (dispatch: DispatchType) => {
+        let data = await myAPI.logout()
+        if (data.resultCode === 0) {
+            dispatch(setAuthUserData(null, null, null, false));
+        }
     }
 }
 

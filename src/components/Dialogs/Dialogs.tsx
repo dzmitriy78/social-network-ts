@@ -2,34 +2,25 @@ import React from "react";
 import classes from "./Dialogs.module.css"
 import {Dialog} from "./Dialog/Dialog";
 import PostForm, {FormikValues} from "../form/PostForm";
-import {MessageDataType} from "../../redux/message-reducer";
 import {MessagePageType} from "./DialogsContainer";
+import {Message} from "./Messages/Messages";
 
 export type DialogsType = {
     messagePage: MessagePageType
     addDialog(dialogText: string): void
-    isAuth: boolean
 }
 
-const Message: React.FC<MessageDataType> = (props) => {
-    return (
-        <div className={classes.message}>{props.message}</div>
-    )
-}
+export const Dialogs: React.FC<DialogsType> = ({addDialog, messagePage}) => {
 
-export const Dialogs:React.FC<DialogsType>=(props)=> {
-
-    let state = props.messagePage;
-
-    let dialogsElement = state.dialogsData
+    let dialogsElement = messagePage.dialogsData
         .map((d, i) => <Dialog key={i} avatar={d.avatar} name={d.name} id={d.id}/>);
 
-    let messageElement = state.messageData
+    let messageElement = messagePage.messageData
         .map((m, i) => <Message key={i} id={m.id} message={m.message}/>);
 
 
-    let addDialog = (values: FormikValues) => {
-        props.addDialog(values.text);
+    let addNewDialog = (values: FormikValues) => {
+        addDialog(values.text);
     }
 
     return (
@@ -39,7 +30,7 @@ export const Dialogs:React.FC<DialogsType>=(props)=> {
             </div>
             <div className={classes.messages}>
                 {messageElement}
-                <PostForm callback = {addDialog}/>
+                <PostForm callback={addNewDialog}/>
             </div>
         </div>
     )
