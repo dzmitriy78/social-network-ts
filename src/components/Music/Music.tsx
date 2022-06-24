@@ -1,9 +1,10 @@
 import React from "react";
 import classes from "./Music.module.css"
-export function Music () {
+function Music () {
     return (
         <div className={classes.music}>
             Music
         </div>
     )
 }
+export default Music

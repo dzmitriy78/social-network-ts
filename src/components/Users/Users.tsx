@@ -52,9 +52,7 @@ export let Users: React.FC<UsersPropsType> = (props) => {
 
             {(
                 <div className={styles.pagination}>
-                    <p className={styles.text}>
-                        {page}/{totalPages}
-                    </p>
+
                     <button
                         onClick={prevPage}
                         className={page === 1 ? styles.disabled : styles.page}

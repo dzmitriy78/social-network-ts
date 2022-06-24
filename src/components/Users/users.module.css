@@ -7,8 +7,9 @@
 
 .btn {
     cursor: pointer;
+    border: teal 1px solid;
     border-radius: 10px;
-    background: darkgray;
+    background: #87a9e7;
 }
 
 .page {
@@ -24,7 +25,7 @@
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
-    background-color: #c9b08f;
+    background-color: darkgray;
 }
 .follow {
     margin-left: 5px;
