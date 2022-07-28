@@ -2,6 +2,7 @@
   "name": "react-kabzda-1",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://github.com/dzmitriy78/package.json",
   "dependencies": {
     "axios": "^0.24.0",
     "formik": "^2.2.9",

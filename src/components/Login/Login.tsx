@@ -22,12 +22,19 @@ interface LoginPropsType {
 }
 
 const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
+
     if (isAuth) {
         return <Navigate replace to="/profile"/>
     }
     return (
         <div>
             <h1>Login</h1>
+            <h3>Данные тестового аккаунта: </h3>
+            <h4>
+                Email: free@samuraijs.com<br/>
+                Password: free
+            </h4>
+
             <Formik
                 initialValues={{email: "", password: "", rememberMe: false}}
                 validate={values => {
