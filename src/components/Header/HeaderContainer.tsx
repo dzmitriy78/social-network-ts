@@ -1,7 +1,9 @@
-import React from "react";
+
 import {Header} from "./Header";
 import {connect} from "react-redux";
 import {logout} from "../../redux/auth-reducer";
+import * as React from "react";
+
 
 type HeaderPropsType = {
     logout(): void

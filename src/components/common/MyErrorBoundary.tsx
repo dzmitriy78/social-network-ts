@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 class ErrorBoundary extends React.Component {
     constructor(props: any) {
@@ -24,6 +24,7 @@ class ErrorBoundary extends React.Component {
             return <h1>Упс... Что-то пошло не так. <br/>Попробуйте перегрузить страницу.</h1>;
         }
 
+        // @ts-ignore
         return this.props.children;
     }
 }

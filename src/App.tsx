@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect} from 'react';
+import * as React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {initial} from "./redux/initial-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import MyErrorBoundary from './components/common/MyErrorBoundary';
+import {Suspense, useEffect} from "react";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const News = React.lazy(() => import( "./components/News/News"));
