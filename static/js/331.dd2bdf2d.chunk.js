@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_kabzda_1=self.webpackChunkreact_kabzda_1||[]).push([[331],{6331:function(e,a,n){n.r(a),n.d(a,{default:function(){return c}});n(2791);var r="News_news__T4EQx",s=n(184);var c=function(){return(0,s.jsx)("div",{className:r,children:"News"})}}}]);
+//# sourceMappingURL=331.dd2bdf2d.chunk.js.map
