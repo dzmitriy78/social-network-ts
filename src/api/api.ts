@@ -10,18 +10,6 @@ const instance = axios.create({
     }
 })
 
-type GetUsersType = {
-    items: UsersType[]
-    totalCount: number
-    error: string
-}
-
-type ResponseType<T> = {
-    resultCode: number
-    messages: string[]
-    data: T
-}
-
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}`)
@@ -39,22 +27,22 @@ export const usersAPI = {
 export const profileAPI = {
     getProfile(userId: number) {
         return instance.get<ProfileType>(`profile/${userId}`)
-            .then(res=>res.data)
+            .then(res => res.data)
     },
     getStatus(userId: number) {
         return instance.get<string>(`profile/status/${userId}`)
-            .then(res=>res.data)
+            .then(res => res.data)
     },
     updateStatus(status: string) {
         return instance.put<ResponseType<{}>>(`profile/status/`, {status})
-            .then(res=>res.data)
+            .then(res => res.data)
+    },
+    updatePhoto(photo: any) {
+        const formData = new FormData()
+        formData.append("image", photo)
+        return instance.put<ResponseType<{ photos: { large: string, small: string } }>>(`profile/photo/`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+            .then(res => res.data)
     }
-}
-
-type MeResponseType = {
-    id: number
-    email: string
-    login: string
 }
 
 export const myAPI = {
@@ -70,4 +58,20 @@ export const myAPI = {
         return instance.delete<ResponseType<{}>>(`auth/login`)
             .then(res => res.data)
     }
+}
+
+type GetUsersType = {
+    items: UsersType[]
+    totalCount: number
+    error: string
+}
+type ResponseType<T> = {
+    resultCode: number
+    messages: string[]
+    data: T
+}
+type MeResponseType = {
+    id: number
+    email: string
+    login: string
 }

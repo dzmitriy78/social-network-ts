@@ -8,9 +8,11 @@ interface ProfileProps {
     profile: ProfileType
     status: string
     updateStatus(status: string): void
+    isOwner: boolean
+    savePhoto(file: any): void
 }
 
-export const Profile: React.FC<ProfileProps> = ({profile, updateStatus, status}) => {
+export const Profile: React.FC<ProfileProps> = ({profile, updateStatus, status, isOwner, savePhoto}) => {
     if (!profile) {
         return <div>
             <img src={no_profile_img} alt={"noProfileImg"}/>
@@ -20,7 +22,9 @@ export const Profile: React.FC<ProfileProps> = ({profile, updateStatus, status})
         <div>
             <ProfileInfo profile={profile}
                          status={status}
-                         updateStatus={updateStatus}/>
+                         updateStatus={updateStatus}
+                         isOwner={isOwner}
+                         savePhoto={savePhoto}/>
             <MyPostsContainer/>
         </div>
     )

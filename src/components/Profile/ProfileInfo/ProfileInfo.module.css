@@ -5,3 +5,6 @@
 .description {
 padding: 10px;
 }
+.userPhoto {
+    max-width: 150px;
+}

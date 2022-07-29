@@ -1,9 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getProfile, getStatus, updateStatus} from "../../redux/profile-reducer";
+import {getProfile, getStatus, savePhoto, updateStatus} from "../../redux/profile-reducer";
 import {Params, PathMatch, useMatch} from "react-router-dom";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {AppStateType} from "../../redux/store";
 
@@ -35,6 +34,7 @@ export type ProfileContainerPropsType = {
     updateStatus(status: string): void
     meId: number
     userId: number
+    savePhoto(file: any): void
 }
 
 export const ProfileURLMatch = (Component: any) => {
@@ -46,40 +46,46 @@ export const ProfileURLMatch = (Component: any) => {
     return RouterComponent
 }
 
-class ProfileContainer extends React.Component<ProfileContainerPropsType, ProfileType> {
-    componentDidMount() {
-        let userId = this.props.match
-            ? this.props.match.params.userId
-            : this.props.meId;
+const ProfileContainer: React.FC<ProfileContainerPropsType> = ({
+                                                                   profile,
+                                                                   getProfile,
+                                                                   getStatus,
+                                                                   updateStatus,
+                                                                   status,
+                                                                   meId,
+                                                                   match,
+                                                                   savePhoto
+                                                               }) => {
+    useEffect(() => {
+        let userId = match
+            ? match.params.userId
+            : meId;
         if (userId) {
-            this.props.getProfile(userId as number)
-            this.props.getStatus(userId as number)
+            getProfile(userId as number)
+            getStatus(userId as number)
         }
-    }
+    }, [match])
 
-    render() {
-
-        return (
-            <Profile {...this.props}
-                     profile={this.props.profile}
-                     status={this.props.status}
-                     updateStatus={this.props.updateStatus}
-            />
-        );
-    }
+    return (
+        <Profile profile={profile}
+                 status={status}
+                 updateStatus={updateStatus}
+                 isOwner={!match}
+                 savePhoto={savePhoto}
+        />
+    );
 }
 
 function mapStateToProps(state: AppStateType) {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        meId: state.auth.userId,
-        isAuth: state.auth.isAuth
+        meId: state.auth.userId
     }
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfile, getStatus, updateStatus}),
+    connect(mapStateToProps, {getProfile, getStatus, updateStatus, savePhoto}),
     ProfileURLMatch,
     /* withAuthRedirect*/)
 (ProfileContainer)
