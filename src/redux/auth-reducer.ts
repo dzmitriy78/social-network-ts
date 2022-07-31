@@ -3,34 +3,11 @@ import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
 
-const SET_USER_DATA = "SET-USER-DATA"
+const SET_USER_DATA = "authReducer/SET-USER-DATA"
 export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): AuthActionType => ({
     type: SET_USER_DATA,
     payload: {userId, email, login, isAuth}
 });
-
-type InitialStateType = {
-    userId: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean
-    captchaUrl: string | null
-}
-
-type AuthPayloadType = {
-    userId: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean,
-}
-
-type AuthActionType = {
-    type: typeof SET_USER_DATA,
-    payload: AuthPayloadType
-}
-
-type DispatchType = Dispatch<AuthActionType>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthActionType>
 
 let initialState: InitialStateType = {
     userId: null,
@@ -83,3 +60,26 @@ export const logout = () => {
 }
 
 export default authReducer;
+
+type InitialStateType = {
+    userId: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+    captchaUrl: string | null
+}
+
+type AuthPayloadType = {
+    userId: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean,
+}
+
+export type AuthActionType = {
+    type: typeof SET_USER_DATA,
+    payload: AuthPayloadType
+}
+
+type DispatchType = Dispatch<AuthActionType>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthActionType>

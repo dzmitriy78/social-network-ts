@@ -37,10 +37,15 @@ export const profileAPI = {
         return instance.put<ResponseType<{}>>(`profile/status/`, {status})
             .then(res => res.data)
     },
-    updatePhoto(photo: any) {
+    updatePhoto(photo: File) {
         const formData = new FormData()
         formData.append("image", photo)
-        return instance.put<ResponseType<{ photos: { large: string, small: string } }>>(`profile/photo/`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        return instance.put<ResponseType<{ photos: { large: string, small: string } }>>(`profile/photo/`, formData,
+            {headers: {'Content-Type': 'multipart/form-data'}})
+            .then(res => res.data)
+    },
+    updateProfile(profile: ProfileType) {
+        return instance.put<ResponseType<{}>>('profile/', profile)
             .then(res => res.data)
     }
 }
