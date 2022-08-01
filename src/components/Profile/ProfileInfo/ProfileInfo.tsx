@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useRef} from "react";
 import classes from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
@@ -20,6 +20,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                                                            editMode
                                                        }) => {
     const dispatch = useDispatch()
+    const filePicker = useRef<HTMLInputElement>(null)
 
     if (!profile) {
         return (
@@ -27,8 +28,8 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
         )
     }
 
-    const onPhotoSelect = (e: ChangeEvent<any>) => {
-        if (e.target.files.length) {
+    const onPhotoSelect = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length) {
             savePhoto(e.target.files[0])
         }
     }
@@ -41,6 +42,10 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
         dispatch(setError(""))
     }
 
+    const handlePick = () => {
+        filePicker.current?.click()
+    }
+
     return (
         <div className={classes.profileInfo}>
             {/*<div>
@@ -49,10 +54,15 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
             <div className={classes.description}>
                 <img className={classes.userPhoto}
                      src={profile.photos.small || profile.photos.large || userPhoto} alt={"photos"}/>
-                {isOwner && <span>Сменить фото<input type={"file"}
-                                                     onChange={onPhotoSelect}/></span>}
+                {isOwner && <div>
+                    <button onClick={handlePick}>Change avatar</button>
+                    <input className={classes.hidden} type={"file"}
+                           onChange={onPhotoSelect}
+                           ref={filePicker}
+                           accept={"image/*,.png, .jpg, .gif, .web"}/></div>}
                 <ProfileStatus status={status}
                                updateStatus={updateStatus}
+                               isOwner={isOwner}
                 />
                 {editMode && <button onClick={disableEditMode}>Cancel Editing</button>}
                 {editMode
