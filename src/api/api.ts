@@ -55,12 +55,18 @@ export const myAPI = {
         return instance.get<ResponseType<MeResponseType>>(`auth/me`)
             .then(response => response.data)
     },
-    login(email: string, password: string, rememberMe: boolean) {
-        return instance.post<ResponseType<{ userId: number }>>(`auth/login`, {email, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean, captcha: string) {
+        return instance.post<ResponseType<{ userId: number }>>(`auth/login`, {email, password, rememberMe, captcha})
             .then(response => response.data)
     },
     logout() {
         return instance.delete<ResponseType<{}>>(`auth/login`)
+            .then(res => res.data)
+    }
+}
+export const securityAPI = {
+    captcha() {
+        return instance.get<{ url: string }>('security/get-captcha-url')
             .then(res => res.data)
     }
 }

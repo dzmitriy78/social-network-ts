@@ -6,10 +6,6 @@ import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {AppStateType} from "../../redux/store";
 
-export type MessagePageType = {
-    dialogsData: Array<DialogsDataType>
-    messageData: Array<MessageDataType>
-}
 let mapStateToProps = (state: AppStateType) => {
     return {
         messagePage: state.messagePage
@@ -21,3 +17,8 @@ const DialogsContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {addDialog}))
 (Dialogs)
 export default DialogsContainer
+
+export type MessagePageType = {
+    dialogsData: Array<DialogsDataType>
+    messageData: Array<MessageDataType>
+}

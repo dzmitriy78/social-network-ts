@@ -19,48 +19,6 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number): 
     userId
 })
 
-type initialStateType = {
-    users: UsersType[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followingInProgress: number[]
-}
-
-type UsersActionType =
-    ToggleFetchingAT
-    | FollowAT
-    | SetUsersAT
-    | SetCurrentPageAT
-    | SetTotalUsersCountAT
-    | ToggleFollowingInProgressAT
-
-type ToggleFetchingAT = {
-    type: "TOGGLE_IS_FETCHING"
-    isFetching: boolean
-}
-type FollowAT = {
-    type: "FOLLOW" | "UNFOLLOW"
-    userId: number
-}
-type SetUsersAT = {
-    type: "SET_USERS"
-    users: Array<UsersType>
-}
-type SetCurrentPageAT = {
-    type: "SET_CURRENT_PAGE"
-    currentPage: number
-}
-type SetTotalUsersCountAT = {
-    type: "SET_TOTAL_USERS_COUNT"
-    totalCount: number
-}
-type ToggleFollowingInProgressAT = {
-    type: "TOGGLE_FOLLOWING_IN_PROGRESS",
-    isFetching: boolean
-    userId: number
-}
 
 let initialState = {
     users: [] as UsersType[],
@@ -71,9 +29,6 @@ let initialState = {
     followingInProgress: []
 }
 
-type DispatchType = Dispatch<UsersActionType>
-type GetStateType = () => AppStateType
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, UsersActionType>
 
 const usersReducer = (state: initialStateType = initialState, action: UsersActionType): initialStateType => {
     switch (action.type) {
@@ -146,4 +101,50 @@ export const unfollowing = (userId: number): ThunkType => {
     }
 }
 
-export default usersReducer;
+export default usersReducer
+
+type initialStateType = {
+    users: UsersType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
+    followingInProgress: number[]
+}
+
+type UsersActionType =
+    ToggleFetchingAT
+    | FollowAT
+    | SetUsersAT
+    | SetCurrentPageAT
+    | SetTotalUsersCountAT
+    | ToggleFollowingInProgressAT
+
+type ToggleFetchingAT = {
+    type: "TOGGLE_IS_FETCHING"
+    isFetching: boolean
+}
+type FollowAT = {
+    type: "FOLLOW" | "UNFOLLOW"
+    userId: number
+}
+type SetUsersAT = {
+    type: "SET_USERS"
+    users: Array<UsersType>
+}
+type SetCurrentPageAT = {
+    type: "SET_CURRENT_PAGE"
+    currentPage: number
+}
+type SetTotalUsersCountAT = {
+    type: "SET_TOTAL_USERS_COUNT"
+    totalCount: number
+}
+type ToggleFollowingInProgressAT = {
+    type: "TOGGLE_FOLLOWING_IN_PROGRESS",
+    isFetching: boolean
+    userId: number
+}
+type DispatchType = Dispatch<UsersActionType>
+type GetStateType = () => AppStateType
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, UsersActionType>

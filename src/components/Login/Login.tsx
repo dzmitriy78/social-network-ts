@@ -1,16 +1,17 @@
-
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {loginFormSchema} from "../form/formValidation/loginFormSchema";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Navigate} from "react-router-dom";
 import * as React from "react";
+import {AppStateType} from "../../redux/store";
 
 
 interface Values {
     email: string
     password: string
     rememberMe: boolean
+    captcha: string
 }
 
 interface Errors {
@@ -18,12 +19,13 @@ interface Errors {
 }
 
 interface LoginPropsType {
-    isAuth: boolean
 
-    login(email: string, password: string, rememberMe: boolean, setStatus: (status: string) => void): void
+    isAuth: boolean
+    captchaUrl: string | null | undefined;
+    login: (email: string, password: string, rememberMe: boolean, captcha: string, setStatus: (status: string) => void) => Promise<void>
 }
 
-const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
+const Login: React.FC<LoginPropsType> = ({login, isAuth, captchaUrl}) => {
 
     if (isAuth) {
         return <Navigate replace to="/profile"/>
@@ -38,7 +40,7 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
             </h4>
 
             <Formik
-                initialValues={{email: "", password: "", rememberMe: false}}
+                initialValues={{email: "", password: "", rememberMe: false, captcha: ""}}
                 validate={values => {
                     const errors: Errors = {};
                     if (!values.email) {
@@ -50,8 +52,8 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
                     }
                     return errors;
                 }}
-                onSubmit={(values: Values, {setStatus}) => {
-                    login(values.email, values.password, values.rememberMe, setStatus)
+                onSubmit={async (values: Values, {setStatus}) => {
+                   await login(values.email, values.password, values.rememberMe, values.captcha, setStatus)
                 }}
                 validationSchema={loginFormSchema}>
                 {({status}) => (
@@ -73,6 +75,11 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
                             <label htmlFor={'rememberMe'}> remember me </label>
                         </div>
                         <div style={{color: "orange"}}>{status ? <span>{status}</span> : null}</div>
+                        <div>
+                            {captchaUrl && <img src={captchaUrl} alt={'captcha'}/>}
+                            {captchaUrl && <Field type={'text'} name={'captcha'} placeholder={'insert captcha'}/>}
+
+                        </div>
                         <button type={'submit'}>Log in</button>
                     </Form>
                 )}
@@ -81,8 +88,9 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
     )
 };
 
-const mapStateToProps = (state: { auth: { isAuth: boolean } }) => ({
-    isAuth: state.auth.isAuth
+const mapStateToProps = (state: AppStateType) => ({
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
 })
 
 export default connect(mapStateToProps, {login})(Login)

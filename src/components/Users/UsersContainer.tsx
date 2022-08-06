@@ -7,19 +7,6 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {AppStateType} from "../../redux/store";
 
-export type UsersContainerPropsType = {
-    currentPage: number
-    setCurrentPage(numberPage: number): void
-    users: Array<UsersType>
-    unfollowing: (userId: number) => void
-    following: (userId: number) => void
-    pageSize: number
-    totalUsersCount: number
-    isFetching: boolean
-    followingInProgress: Array<number>
-    getUsers(currentPage: number, pageSize: number): void
-    isAuth: boolean
-}
 
 class UsersContainer extends React.Component<UsersContainerPropsType, UsersType> {
     componentDidMount() {
@@ -70,3 +57,17 @@ export default compose<React.ComponentType>(
         following, unfollowing, setCurrentPage, getUsers
     }))
 (UsersContainer)
+
+export type UsersContainerPropsType = {
+    currentPage: number
+    setCurrentPage(numberPage: number): void
+    users: Array<UsersType>
+    unfollowing: (userId: number) => void
+    following: (userId: number) => void
+    pageSize: number
+    totalUsersCount: number
+    isFetching: boolean
+    followingInProgress: Array<number>
+    getUsers(currentPage: number, pageSize: number): void
+    isAuth: boolean
+}
