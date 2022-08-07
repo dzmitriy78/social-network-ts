@@ -13,7 +13,8 @@ export const Profile: React.FC<ProfileProps> = ({
                                                     savePhoto,
                                                     saveProfile,
                                                     error,
-                                                    editMode
+                                                    editMode,
+                                                    isAuth
                                                 }) => {
     if (!profile) {
         return <div>
@@ -26,6 +27,7 @@ export const Profile: React.FC<ProfileProps> = ({
                          status={status}
                          updateStatus={updateStatus}
                          isOwner={isOwner}
+                         isAuth={isAuth}
                          savePhoto={savePhoto}
                          editMode={editMode}
                          error={error}
@@ -42,6 +44,7 @@ interface ProfileProps {
     updateStatus(status: string): void
 
     isOwner: boolean
+    isAuth: boolean
 
     savePhoto(file: File): void
 

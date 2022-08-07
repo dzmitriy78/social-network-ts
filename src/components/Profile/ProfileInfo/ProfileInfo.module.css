@@ -1,7 +1,12 @@
 .profileInfo {
-    display: block;
+    display: inline-block;
 }
-
+.name {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: "Bookman Old Style", sans-serif;
+    color: indigo;
+}
 .description {
 padding: 10px;
 }
@@ -16,4 +21,13 @@ padding: 10px;
     margin: 0;
     line-height: 0;
     overflow: hidden;
+}
+.btn {
+    cursor: pointer;
+    border: teal 1px solid;
+    border-radius: 10px;
+    background: #87a9e7;
+}
+.contactsEdit {
+    display: flex;
 }

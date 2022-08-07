@@ -6,9 +6,15 @@ interface ProfileStatusPropsType {
     updateStatus(status: string): void
 
     isOwner: boolean
+    isAuth: boolean
 }
 
-const ProfileStatus: React.FC<ProfileStatusPropsType> = ({updateStatus, status, isOwner}) => {
+const ProfileStatus: React.FC<ProfileStatusPropsType> = ({
+                                                             updateStatus,
+                                                             status,
+                                                             isOwner,
+                                                             isAuth
+                                                         }) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [newStatus, setNewStatus] = useState<string>(status)
 
@@ -21,7 +27,7 @@ const ProfileStatus: React.FC<ProfileStatusPropsType> = ({updateStatus, status, 
     }, [status])
 
     const activateEditMode = () => {
-        if (isOwner)
+        if (isAuth && isOwner)
             setEditMode(true)
     }
     const deactivateEditMode = () => {
@@ -38,7 +44,11 @@ const ProfileStatus: React.FC<ProfileStatusPropsType> = ({updateStatus, status, 
             {!editMode
                 ? <div>
                     <span onDoubleClick={activateEditMode}
-                          style={{color: "azure", fontSize: "24px", fontWeight: "bold"}}>
+                          style={{fontFamily: "Bookman Old Style",
+                              color: "azure",
+                              fontSize: "24px",
+                              fontStyle: "italic",
+                              fontWeight: "bold"}}>
                         {status || "no Status"}
                     </span>
                 </div>

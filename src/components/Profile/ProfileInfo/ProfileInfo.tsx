@@ -7,6 +7,7 @@ import ProfileDataEditingForm from "../../form/ProfileDataEditingForm";
 import {useDispatch} from "react-redux";
 import {setEditMode, setError} from "../../../redux/profile-reducer";
 import {ProfileType} from "../ProfileContainer";
+import {ProfileData} from "./ProfileData";
 
 
 export const ProfileInfo: React.FC<ProfileInfoType> = ({
@@ -17,7 +18,8 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                                                            savePhoto,
                                                            saveProfile,
                                                            error,
-                                                           editMode
+                                                           editMode,
+                                                           isAuth
                                                        }) => {
     const dispatch = useDispatch()
     const filePicker = useRef<HTMLInputElement>(null)
@@ -48,14 +50,11 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
 
     return (
         <div className={classes.profileInfo}>
-            {/*<div>
-                <img src={rootImg} alt={"rootImg"}/>
-            </div>*/}
             <div className={classes.description}>
                 <img className={classes.userPhoto}
-                     src={profile.photos.small || profile.photos.large || userPhoto} alt={"photos"}/>
-                {isOwner && <div>
-                    <button onClick={handlePick}>Change avatar</button>
+                     src={profile.photos.large || userPhoto} alt={"photos"}/>
+                {isAuth && isOwner && <div>
+                    <button className={classes.btn} onClick={handlePick}>Change avatar</button>
                     <input className={classes.hidden} type={"file"}
                            onChange={onPhotoSelect}
                            ref={filePicker}
@@ -63,67 +62,30 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                 <ProfileStatus status={status}
                                updateStatus={updateStatus}
                                isOwner={isOwner}
+                               isAuth={isAuth}
                 />
-                {editMode && <button onClick={disableEditMode}>Cancel Editing</button>}
-                {editMode
+                {isAuth && isOwner && editMode && <button className={classes.btn} onClick={disableEditMode}>Cancel editing</button>}
+                {isAuth && isOwner && editMode
                     ? <ProfileDataEditingForm profile={profile}
                                               saveProfile={saveProfile}
                                               error={error}/>
                     : <ProfileData profile={profile}
                                    goToEditMode={enableEditMode}
-                                   isOwner={isOwner}/>}
+                                   isOwner={isOwner}
+                                   isAuth={isAuth}/>}
             </div>
         </div>
     )
 }
 
-const Contacts: React.FC<ContactPropsType> = ({title, value}) => {
-    return <div>
-        <b>{title}</b>: {value}
-    </div>
-}
-
-const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}) => {
-    return (
-        <div>
-            {isOwner && <button onClick={goToEditMode}>Edit Profile</button>}
-            <div className={classes.description}>
-                <h3>  {profile.fullName}</h3>
-            </div>
-            <div className={classes.description}>
-                <b>Looking for a job:</b> {profile.lookingForAJob ? "Yes" : "No"}
-            </div>
-            <div className={classes.description}>
-                <b>My professional skills:</b> {profile.lookingForAJobDescription}
-            </div>
-            <div className={classes.description}>
-                <b>AboutMe:</b> {profile.aboutMe}
-            </div>
-            <div className={classes.description}>
-                <b>Contacts</b>: {Object.keys(profile.contacts)
-                .map(key => {
-                    return <Contacts key={key} title={key} value={profile.contacts[key]}/>
-                })}
-            </div>
-        </div>
-    )
-}
 type ProfileInfoType = {
     profile: ProfileType
     status: string
     updateStatus(status: string): void
     isOwner: boolean
+    isAuth: boolean
     savePhoto(file: File): void
     error: string
     editMode: boolean
     saveProfile(profile: ProfileType): void
-}
-type ContactPropsType = {
-    title: string
-    value: string
-}
-type ProfileDataType = {
-    profile: any
-    isOwner: boolean
-    goToEditMode(): void
 }

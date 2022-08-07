@@ -5,16 +5,11 @@ import {AppStateType} from "./store";
 
 const SET_USER_DATA = "authReducer/SET-USER-DATA"
 const SET_CAPTCHA = "authReducer/SET-CAPTCHA"
-export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): AuthActionType => ({
-    type: SET_USER_DATA,
-    payload: {userId, email, login, isAuth}
-}) as const
-export const setCaptcha = (captchaUrl: string) => ({
-    type: SET_CAPTCHA,
-    payload: {captchaUrl}
-}) as const
+export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
+    type: SET_USER_DATA, payload: {userId, email, login, isAuth}}) as const
+export const setCaptcha = (captchaUrl: string) => ({type: SET_CAPTCHA, payload: {captchaUrl}}) as const
 
-let initialState: InitialStateType = {
+const initialState: InitialStateType = {
     userId: null,
     email: null,
     login: null,

@@ -19,35 +19,35 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, save
     })
     return (
         <form onSubmit={formik.handleSubmit}>
-            <div style={{color: "red", fontSize: "20px"}}>{error}</div>
+            <div style={{color: "darkorange", fontSize: "20px"}}>{error}</div>
             <div className={classes.description}>
                 <label htmlFor={'fullName'}><b>fullName: </b></label>
-                <input type='text'
+                <input className={classes.contactsEdit} type='text'
                        {...formik.getFieldProps("fullName")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'lookingForAJob'}> <b>Looking for a job: </b></label>
-                <input type={'checkbox'} defaultChecked={profile.lookingForAJob}
+                <input className={classes.contactsEdit} type={'checkbox'} defaultChecked={profile.lookingForAJob}
                        {...formik.getFieldProps("lookingForAJob")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'lookingForAJobDescription'}> <b>My professional skills: </b></label>
-                <input type='text'
+                <input className={classes.contactsEdit} type='text'
                        {...formik.getFieldProps("lookingForAJobDescription")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'aboutMe'}><b>AboutMe: </b></label>
-                <textarea {...formik.getFieldProps("aboutMe")}
+                <textarea className={classes.contactsEdit} {...formik.getFieldProps("aboutMe")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'contacts'}><b>Contacts</b></label>: {Object.keys(profile.contacts)
                 .map((key, i) => {
                     return <div key={i}>
-                        <b>{key}: <input type='text'
+                        <b>{key}: <input className={classes.contactsEdit} type='text'
                                          {...formik.getFieldProps("contacts." + key)}/>
                         </b>
                     </div>
@@ -55,7 +55,7 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, save
                 })}
             </div>
 
-            <button type={'submit'}>Отправить</button>
+            <button className={classes.btn} type={'submit'}>Send</button>
         </form>
     )
 }

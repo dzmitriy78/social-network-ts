@@ -26,7 +26,7 @@ const ProfileContainer: React.FC<ProfileContainerPropsType> = ({
                                                                    savePhoto,
                                                                    saveProfile,
                                                                    editMode,
-                                                                   error
+                                                                   error, isAuth
                                                                }) => {
     useEffect(() => {
         let userId = match
@@ -36,17 +36,18 @@ const ProfileContainer: React.FC<ProfileContainerPropsType> = ({
             getProfile(userId as number)
             getStatus(userId as number)
         }
-    }, [match])
+    }, [match?.params.userId])
 
     return (
         <Profile profile={profile}
                  status={status}
                  updateStatus={updateStatus}
-                 isOwner={!match}
+                 isOwner={!match?.params.userId}
                  savePhoto={savePhoto}
                  editMode={editMode}
                  error={error}
-                 saveProfile={saveProfile}/>
+                 saveProfile={saveProfile}
+                 isAuth={isAuth}/>
     );
 }
 
@@ -56,7 +57,8 @@ function mapStateToProps(state: AppStateType) {
         status: state.profilePage.status,
         meId: state.auth.userId,
         error: state.profilePage.error,
-        editMode: state.profilePage.editMode
+        editMode: state.profilePage.editMode,
+        isAuth: state.auth.isAuth
     }
 }
 
@@ -98,4 +100,5 @@ export type ProfileContainerPropsType = {
     error: string
     editMode: boolean
     saveProfile(profile: ProfileType): void
+    isAuth: boolean
 }
