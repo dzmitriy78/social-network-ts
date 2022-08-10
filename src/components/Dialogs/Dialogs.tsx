@@ -5,10 +5,6 @@ import PostForm, {FormikValues} from "../form/PostForm";
 import {MessagePageType} from "./DialogsContainer";
 import {Message} from "./Messages/Messages";
 
-export type DialogsType = {
-    messagePage: MessagePageType
-    addDialog(dialogText: string): void
-}
 
 export const Dialogs: React.FC<DialogsType> = ({addDialog, messagePage}) => {
 
@@ -36,3 +32,7 @@ export const Dialogs: React.FC<DialogsType> = ({addDialog, messagePage}) => {
     )
 }
 
+export type DialogsType = {
+    messagePage: MessagePageType
+    addDialog(dialogText: string): void
+}

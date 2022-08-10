@@ -1,18 +1,22 @@
 .profileInfo {
     display: inline-block;
 }
+
 .name {
     font-size: 30px;
     font-weight: bold;
     font-family: "Bookman Old Style", sans-serif;
     color: indigo;
 }
+
 .description {
-padding: 10px;
+    padding: 10px;
 }
+
 .userPhoto {
     max-width: 150px;
 }
+
 .hidden {
     opacity: 0;
     height: 0;
@@ -22,12 +26,26 @@ padding: 10px;
     line-height: 0;
     overflow: hidden;
 }
+
 .btn {
     cursor: pointer;
     border: teal 1px solid;
     border-radius: 10px;
     background: #87a9e7;
+    margin-top: 10px;
 }
+
 .contactsEdit {
     display: flex;
+}
+
+.statusTitle {
+    font-family: "Bookman Old Style", sans-serif;
+    color: azure;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: bold;
+}
+.status {
+    margin: 10px 0;
 }

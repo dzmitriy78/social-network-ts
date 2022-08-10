@@ -1,3 +1,6 @@
+.users {
+    min-height: 100vh;
+}
 .userAvatar {
     width: 40px;
     height: 40px;

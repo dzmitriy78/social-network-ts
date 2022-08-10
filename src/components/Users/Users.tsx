@@ -47,7 +47,7 @@ export let Users: React.FC<UsersPropsType> = (props) => {
         setPage(Math.ceil(num / 10))
         props.onPageChanged(num)
     }
-    return (<div>
+    return (<div className={styles.users}>
         <div>
 
             {(

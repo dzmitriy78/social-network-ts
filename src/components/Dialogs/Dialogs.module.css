@@ -2,9 +2,10 @@
    display: grid;
     padding: 10px;
     grid-template-columns: 2fr 7fr;
+    min-height: 100vh;
 }
 
-.dialogs dialogsItems {
+.dialogs .dialogsItems {
     text-decoration: none;
 }
 

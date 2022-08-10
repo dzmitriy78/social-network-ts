@@ -2,11 +2,6 @@ import React from "react";
 import classes from "./../Dialogs.module.css"
 import {NavLink} from "react-router-dom";
 
-export type DialogType = {
-    id: number
-    name: string
-    avatar: string
-}
 
 export const Dialog: React.FC<DialogType> = ({avatar, id, name}) => {
     let path = `/dialogs/${id}`;
@@ -17,4 +12,10 @@ export const Dialog: React.FC<DialogType> = ({avatar, id, name}) => {
                      to={path}>{name}</NavLink>
         </div>
     )
+}
+
+export type DialogType = {
+    id: number
+    name: string
+    avatar: string
 }

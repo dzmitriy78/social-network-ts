@@ -1,25 +1,7 @@
-export const ADD_DIALOG = "ADD-DIALOG";
+export const ADD_DIALOG = "messageReducer/ADD-DIALOG";
 export const addDialog = (dialogText: string): messageActionType => ({type: ADD_DIALOG, dialogText})
 
-type initialStateType = {
-    dialogsData: DialogsDataType[]
-    messageData: MessageDataType[]
-}
 
-type messageActionType = {
-    type: typeof ADD_DIALOG
-    dialogText: string
-}
-
-export type DialogsDataType = {
-    id: number
-    name: string
-    avatar: string
-}
-export type MessageDataType = {
-    id: number
-    message: string
-}
 let initialState: initialStateType = {
     dialogsData: [
         {id: 1, name: "Dim", avatar: "https://klike.net/uploads/posts/2019-03/1551511801_1.jpg"},
@@ -63,3 +45,24 @@ const messageReducer = (state = initialState, action: messageActionType): initia
     }
 }
 export default messageReducer;
+
+
+type initialStateType = {
+    dialogsData: DialogsDataType[]
+    messageData: MessageDataType[]
+}
+
+type messageActionType = {
+    type: typeof ADD_DIALOG
+    dialogText: string
+}
+
+export type DialogsDataType = {
+    id: number
+    name: string
+    avatar: string
+}
+export type MessageDataType = {
+    id: number
+    message: string
+}

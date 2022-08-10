@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef} from "react";
+import React, {useRef} from "react";
 import classes from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
@@ -30,7 +30,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
         )
     }
 
-    const onPhotoSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    const onPhotoSelect: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         if (e.target.files?.length) {
             savePhoto(e.target.files[0])
         }

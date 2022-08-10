@@ -3,20 +3,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import classes from "./PostForm.module.css"
 import {postFormSchema} from "./formValidation/loginFormSchema";
 
-
-export interface FormikValues {
-    text: string
-}
-
-interface Errors {
-    text?: string
-}
-
-interface PostFormProps {
-    callback: (values: FormikValues) => void
-}
-
-const PostForm = (props: PostFormProps) => {
+const PostForm: React.FC<PostFormProps> = ({callback}) => {
     return (
         <div>
             <Formik
@@ -29,7 +16,7 @@ const PostForm = (props: PostFormProps) => {
                     return errors;
                 }}
                 onSubmit={(values, actions) => {
-                    props.callback(values)
+                    callback(values)
                     actions.resetForm({values: {text: ""}})
                 }}
                 validationSchema={postFormSchema}
@@ -53,3 +40,15 @@ const PostForm = (props: PostFormProps) => {
 };
 
 export default PostForm;
+
+export interface FormikValues {
+    text: string
+}
+
+interface Errors {
+    text?: string
+}
+
+interface PostFormProps {
+    callback: (values: FormikValues) => void
+}

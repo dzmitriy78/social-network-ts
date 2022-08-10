@@ -1,4 +1,5 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import classes from "./ProfileInfo.module.css"
 
 interface ProfileStatusPropsType {
     status: string
@@ -35,20 +36,16 @@ const ProfileStatus: React.FC<ProfileStatusPropsType> = ({
         updateStatus(newStatus)
     }
 
-    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onStatusChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         setNewStatus(e.currentTarget.value)
     }
 
     return (
-        <div>
+        <div className={classes.status}>
             {!editMode
                 ? <div>
-                    <span onDoubleClick={activateEditMode}
-                          style={{fontFamily: "Bookman Old Style",
-                              color: "azure",
-                              fontSize: "24px",
-                              fontStyle: "italic",
-                              fontWeight: "bold"}}>
+                    <span className={classes.statusTitle} title={"double click to change"}
+                          onDoubleClick={activateEditMode}>
                         {status || "no Status"}
                     </span>
                 </div>

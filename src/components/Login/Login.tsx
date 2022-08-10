@@ -5,6 +5,7 @@ import {login} from "../../redux/auth-reducer";
 import {Navigate} from "react-router-dom";
 import * as React from "react";
 import {AppStateType} from "../../redux/store";
+import classes from "./Login.module.css"
 
 
 interface Values {
@@ -31,8 +32,8 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth, captchaUrl}) => {
         return <Navigate replace to="/profile"/>
     }
     return (
-        <div>
-            <h1>Login</h1>
+        <div className={classes.login}>
+            <h1>Log in</h1>
             <h3>Данные тестового аккаунта: </h3>
             <h4>
                 Email: free@samuraijs.com<br/>
@@ -80,7 +81,7 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth, captchaUrl}) => {
                             {captchaUrl && <Field type={'text'} name={'captcha'} placeholder={'insert captcha'}/>}
 
                         </div>
-                        <button type={'submit'}>Log in</button>
+                        <button className={classes.button} type={'submit'}>Log in</button>
                     </Form>
                 )}
             </Formik>
