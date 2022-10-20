@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/331.28fd59c8.chunk.css","mappings":"AAAA,kBACI,gBACJ","sources":["components/News/News.module.css"],"sourcesContent":[".news {\r\n    min-height: 100vh;\r\n}"],"names":[],"sourceRoot":""}

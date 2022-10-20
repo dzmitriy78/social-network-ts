@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/953.519b25c8.chunk.css","mappings":"AAAA,oBACI,gBACJ","sources":["components/Music/Music.module.css"],"sourcesContent":[".music {\r\n    min-height: 100vh;\r\n}"],"names":[],"sourceRoot":""}

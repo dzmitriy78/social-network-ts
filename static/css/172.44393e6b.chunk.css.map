@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/172.44393e6b.chunk.css","mappings":"AAAA,0BACI,gBACJ","sources":["components/Settings/Settings.module.css"],"sourcesContent":[".settings {\r\n    min-height: 100vh;\r\n}"],"names":[],"sourceRoot":""}
