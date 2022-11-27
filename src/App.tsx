@@ -17,6 +17,7 @@ const ProfileContainer = React.lazy(() => import( "./components/Profile/ProfileC
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const HeaderContainer = React.lazy(() => import( "./components/Header/HeaderContainer"));
 const Login = React.lazy(() => import("./components/Login/Login"));
+const Chat = React.lazy(()=> import("./components/Chat/Chat"))
 
 
 const App: React.FC<AppPropsType> = ({initial, initialize}) => {
@@ -38,6 +39,7 @@ const App: React.FC<AppPropsType> = ({initial, initialize}) => {
                             <Route path="/dialogs/*" element={<DialogsContainer/>}/>
                             <Route path="/profile/*" element={<ProfileContainer/>}/>
                             <Route path="/users/*" element={<UsersContainer/>}/>
+                            <Route path="/chat/*" element={<Chat/>}/>
                             <Route path="/news/*" element={<News/>}/>
                             <Route path='/music/*' element={<Music/>}/>
                             <Route path="/settings/*" element={<Settings/>}/>
