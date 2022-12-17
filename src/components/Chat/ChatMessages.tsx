@@ -1,17 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import ChatMessage from "./ChatMessage";
-import {ws} from "./Chat";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../redux/store";
 
 const ChatMessages: React.FC = () => {
 
-    const [messages, setMessages] = useState<ChatMessageType[]>([])
-
-    useEffect(() => {
-        ws.addEventListener("message", (e) => {
-            const newMessage = JSON.parse(e.data)
-            setMessages((prevState) => [...prevState, ...newMessage])
-        })
-    }, [])
+    const messages = useSelector((state: AppStateType) => state.chat.messages)
 
     return (
         <div style={{height: 400, overflowY: "auto"}}>
@@ -22,12 +16,4 @@ const ChatMessages: React.FC = () => {
     )
 }
 
-export default ChatMessages;
-
-export type ChatMessageType = {
-    message: string,
-    photo: string,
-    userId: number,
-    userName: string
-
-}
+export default ChatMessages

@@ -1,15 +1,20 @@
 import React, {useState} from 'react';
-import {ws} from "./Chat";
+import {useDispatch} from "react-redux";
+import {sendMessage} from "../../redux/chat-reducer";
 
 const ChatForm: React.FC = () => {
 
     const [message, setMessage] = useState<string>("")
+    //const [statusChannel, setStatusChannel] = useState<"pending" | "open">("pending")
 
-    const sendMessage = () => {
-        if (message) {
-            ws.send(message)
-            setMessage("")
+    const dispatch = useDispatch<any>()
+
+    const sendMessageHandler = () => {
+        if (!message) {
+            return
         }
+        dispatch(sendMessage(message))
+        setMessage("")
     }
     return (
         <div>
@@ -19,7 +24,7 @@ const ChatForm: React.FC = () => {
             </textarea>
             </div>
             <div>
-                <button onClick={sendMessage}>
+                <button onClick={sendMessageHandler} disabled={false}>
                     Send
                 </button>
             </div>
